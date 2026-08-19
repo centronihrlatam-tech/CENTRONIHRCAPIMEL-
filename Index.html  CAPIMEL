@@ -1,0 +1,8399 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>CAPIMEL Bolivia</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --navy: #073b73;
+      --blue: #126bc3;
+      --cyan: #36d4dc;
+      --mint: #27be91;
+      --violet: #7658d8;
+      --ink: #123653;
+      --muted: #678298;
+      --line: #d8ebf2;
+      --soft: #f2fbfd;
+
+      --shadow:
+        0 25px 70px
+        rgba(17, 83, 126, 0.13);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100%;
+    }
+
+    body {
+      color: var(--ink);
+
+      font-family:
+        "Manrope",
+        Arial,
+        sans-serif;
+
+      background: #ffffff;
+      overflow-x: hidden;
+    }
+
+    button,
+    a,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+
+    /* =====================================================
+       APLICACIÓN
+       ===================================================== */
+
+    .app {
+      position: relative;
+
+      min-height:
+        100svh;
+
+      isolation:
+        isolate;
+
+      overflow:
+        hidden;
+
+      background:
+        #ffffff;
+    }
+
+
+    /* =====================================================
+       FONDO TECNOLÓGICO
+       ===================================================== */
+
+    #networkCanvas {
+      position:
+        fixed;
+
+      z-index:
+        -5;
+
+      inset:
+        0;
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      opacity:
+        0.62;
+
+      pointer-events:
+        none;
+
+      mask-image:
+        linear-gradient(
+          90deg,
+          #000 0%,
+          #000 42%,
+          transparent 66%
+        );
+
+      -webkit-mask-image:
+        linear-gradient(
+          90deg,
+          #000 0%,
+          #000 42%,
+          transparent 66%
+        );
+    }
+
+
+    .tech-grid {
+      position:
+        fixed;
+
+      z-index:
+        -4;
+
+      inset:
+        0;
+
+      pointer-events:
+        none;
+
+      opacity:
+        0.3;
+
+      background-image:
+
+        linear-gradient(
+          rgba(7, 125, 170, 0.045) 1px,
+          transparent 1px
+        ),
+
+        linear-gradient(
+          90deg,
+          rgba(7, 125, 170, 0.045) 1px,
+          transparent 1px
+        );
+
+      background-size:
+        52px 52px;
+
+      mask-image:
+        linear-gradient(
+          90deg,
+          #000 0%,
+          rgba(0, 0, 0, 0.7) 42%,
+          transparent 63%
+        );
+
+      -webkit-mask-image:
+        linear-gradient(
+          90deg,
+          #000 0%,
+          rgba(0, 0, 0, 0.7) 42%,
+          transparent 63%
+        );
+    }
+
+
+    /* =====================================================
+       CABECERA
+       ===================================================== */
+
+    .topbar {
+
+      width:
+        min(
+          1560px,
+          calc(100% - 56px)
+        );
+
+      min-height:
+        88px;
+
+      margin:
+        0 auto;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        22px;
+    }
+
+
+    .brand {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        13px;
+
+      color:
+        var(--ink);
+
+      text-decoration:
+        none;
+    }
+
+
+    .logo-shell {
+
+      width:
+        53px;
+
+      height:
+        53px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      padding:
+        7px;
+
+      border:
+        1px solid
+        var(--line);
+
+      border-radius:
+        17px;
+
+      background:
+        #ffffff;
+
+      box-shadow:
+        0 12px 30px
+        rgba(9, 86, 134, 0.11);
+
+      overflow:
+        hidden;
+    }
+
+
+    #centreLogo {
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      object-fit:
+        contain;
+    }
+
+
+    .brand-copy {
+
+      display:
+        grid;
+
+      gap:
+        2px;
+    }
+
+
+    .brand-copy strong {
+
+      color:
+        var(--navy);
+
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        1rem;
+    }
+
+
+    .brand-copy small {
+
+      color:
+        var(--muted);
+
+      font-size:
+        0.65rem;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        0.16em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .top-actions {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        11px;
+    }
+
+
+    .status-chip {
+
+      min-height:
+        42px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        10px;
+
+      padding:
+        0 15px;
+
+      border:
+        1px solid
+        var(--line);
+
+      border-radius:
+        999px;
+
+      color:
+        #55778d;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.94
+        );
+
+      box-shadow:
+        0 8px 24px
+        rgba(
+          18,
+          88,
+          126,
+          0.06
+        );
+
+      backdrop-filter:
+        blur(14px);
+
+      font-size:
+        0.71rem;
+
+      font-weight:
+        800;
+
+      transition:
+        0.2s ease;
+    }
+
+
+    .status-chip:hover {
+
+      transform:
+        translateY(-2px);
+
+      border-color:
+        #93dce6;
+
+      box-shadow:
+        0 14px 30px
+        rgba(
+          18,
+          108,
+          154,
+          0.13
+        );
+    }
+
+
+    .status-chip:focus-visible {
+
+      outline:
+        3px solid
+        rgba(
+          54,
+          212,
+          220,
+          0.25
+        );
+
+      outline-offset:
+        3px;
+    }
+
+
+    .status-chip i {
+
+      width:
+        8px;
+
+      height:
+        8px;
+
+      border-radius:
+        50%;
+
+      background:
+        var(--mint);
+
+      box-shadow:
+
+        0 0 0 6px
+        rgba(
+          39,
+          190,
+          145,
+          0.11
+        ),
+
+        0 0 15px
+        rgba(
+          39,
+          190,
+          145,
+          0.45
+        );
+
+      animation:
+        statusPulse
+        1.8s ease-in-out
+        infinite;
+    }
+
+
+    .menu-btn,
+    .close-btn {
+
+      width:
+        46px;
+
+      height:
+        46px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      border:
+        1px solid
+        var(--line);
+
+      border-radius:
+        15px;
+
+      color:
+        var(--blue);
+
+      background:
+        #ffffff;
+
+      box-shadow:
+        0 10px 25px
+        rgba(
+          11,
+          83,
+          125,
+          0.07
+        );
+
+      transition:
+        0.2s ease;
+    }
+
+
+    .menu-btn:hover,
+    .close-btn:hover {
+
+      transform:
+        translateY(-2px);
+
+      border-color:
+        #9fdce7;
+    }
+
+
+    .menu-btn svg,
+    .close-btn svg {
+
+      width:
+        21px;
+    }
+
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+
+    .hero {
+
+      width:
+        min(
+          1560px,
+          calc(100% - 56px)
+        );
+
+      min-height:
+        calc(
+          100svh - 88px
+        );
+
+      margin:
+        0 auto;
+
+      padding:
+        24px 0 62px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        minmax(0, 0.86fr)
+        minmax(570px, 1.14fr);
+
+      align-items:
+        center;
+
+      gap:
+        clamp(
+          16px,
+          3vw,
+          48px
+        );
+    }
+
+
+    .copy {
+
+      position:
+        relative;
+
+      z-index:
+        8;
+
+      max-width:
+        690px;
+    }
+
+
+    .eyebrow {
+
+      width:
+        fit-content;
+
+      min-height:
+        36px;
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      gap:
+        9px;
+
+      margin-bottom:
+        21px;
+
+      padding:
+        0 13px;
+
+      border:
+        1px solid
+        #ccecf0;
+
+      border-radius:
+        999px;
+
+      color:
+        #078899;
+
+      background:
+        rgba(
+          240,
+          253,
+          254,
+          0.86
+        );
+
+      font-size:
+        0.68rem;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        0.13em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .eyebrow i {
+
+      width:
+        7px;
+
+      height:
+        7px;
+
+      border-radius:
+        50%;
+
+      background:
+        var(--cyan);
+
+      box-shadow:
+        0 0 0 5px
+        rgba(
+          54,
+          212,
+          220,
+          0.13
+        );
+    }
+
+
+    h1 {
+
+      margin:
+        0;
+
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        clamp(
+          5.2rem,
+          8.6vw,
+          9.6rem
+        );
+
+      line-height:
+        0.84;
+
+      letter-spacing:
+        -0.07em;
+    }
+
+
+    .word-capimel {
+
+      display:
+        block;
+
+      width:
+        fit-content;
+
+      color:
+        transparent;
+
+      background:
+        linear-gradient(
+          90deg,
+          #45d2d9 0%,
+          #2299c9 48%,
+          #0c65bd 100%
+        );
+
+      background-size:
+        170% auto;
+
+      -webkit-background-clip:
+        text;
+
+      background-clip:
+        text;
+
+      filter:
+        drop-shadow(
+          0 15px 28px
+          rgba(
+            32,
+            151,
+            191,
+            0.12
+          )
+        );
+
+      animation:
+        titleFlow
+        5s linear
+        infinite;
+    }
+
+
+    .word-bolivia {
+
+      display:
+        block;
+
+      margin-top:
+        17px;
+
+      color:
+        var(--navy);
+
+      font-size:
+        0.34em;
+
+      letter-spacing:
+        0.10em;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .subtitle {
+
+      max-width:
+        680px;
+
+      margin:
+        28px 0 0;
+
+      color:
+        var(--navy);
+
+      font-size:
+        clamp(
+          1.02rem,
+          1.35vw,
+          1.22rem
+        );
+
+      font-weight:
+        800;
+
+      line-height:
+        1.5;
+    }
+
+
+    .description {
+
+      max-width:
+        620px;
+
+      margin:
+        13px 0 0;
+
+      color:
+        var(--muted);
+
+      font-size:
+        0.92rem;
+
+      line-height:
+        1.72;
+    }
+
+
+    /* =====================================================
+       TARJETAS MEL
+       ===================================================== */
+
+    .feature-row {
+
+      margin-top:
+        27px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          3,
+          1fr
+        );
+
+      gap:
+        10px;
+    }
+
+
+    .feature {
+
+      position:
+        relative;
+
+      min-height:
+        92px;
+
+      padding:
+        15px;
+
+      border:
+        1px solid
+        var(--line);
+
+      border-radius:
+        19px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.92
+        );
+
+      box-shadow:
+        0 12px 30px
+        rgba(
+          15,
+          91,
+          129,
+          0.055
+        );
+
+      overflow:
+        hidden;
+
+      transition:
+        0.2s ease;
+    }
+
+
+    .feature::before {
+
+      content:
+        "";
+
+      position:
+        absolute;
+
+      inset:
+        0 auto 0 0;
+
+      width:
+        3px;
+
+      background:
+        var(--feature);
+    }
+
+
+    .feature:hover {
+
+      transform:
+        translateY(-4px);
+
+      border-color:
+        #b5e1ea;
+    }
+
+
+    .feature b {
+
+      display:
+        block;
+
+      color:
+        var(--feature);
+
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        0.95rem;
+    }
+
+
+    .feature span {
+
+      display:
+        block;
+
+      margin-top:
+        7px;
+
+      color:
+        #668096;
+
+      font-size:
+        0.70rem;
+
+      font-weight:
+        700;
+
+      line-height:
+        1.38;
+    }
+
+
+    /* =====================================================
+       BOTONES
+       ===================================================== */
+
+    .actions {
+
+      margin-top:
+        28px;
+
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        12px;
+    }
+
+
+    .primary,
+    .secondary {
+
+      min-height:
+        54px;
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      gap:
+        10px;
+
+      padding:
+        0 21px;
+
+      border-radius:
+        16px;
+
+      font-weight:
+        800;
+
+      transition:
+        0.2s ease;
+    }
+
+
+    .primary {
+
+      border:
+        0;
+
+      color:
+        #ffffff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #0baec1,
+          #126cc1
+        );
+
+      box-shadow:
+        0 16px 35px
+        rgba(
+          14,
+          119,
+          174,
+          0.22
+        );
+    }
+
+
+    .secondary {
+
+      border:
+        1px solid
+        var(--line);
+
+      color:
+        var(--navy);
+
+      background:
+        #ffffff;
+    }
+
+
+    .primary:hover,
+    .secondary:hover {
+
+      transform:
+        translateY(-3px);
+    }
+
+
+    .primary svg,
+    .secondary svg {
+
+      width:
+        18px;
+    }
+
+
+    .country-line {
+
+      margin-top:
+        21px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        10px;
+
+      color:
+        #718b9e;
+
+      font-size:
+        0.72rem;
+
+      font-weight:
+        800;
+    }
+
+
+    .country-line i {
+
+      width:
+        28px;
+
+      height:
+        1px;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--cyan),
+          transparent
+        );
+    }
+
+
+    /* =====================================================
+       ÁREA DE CAPI
+       ===================================================== */
+
+    .capi-area {
+
+      --mx:
+        0px;
+
+      --my:
+        0px;
+
+      position:
+        relative;
+
+      min-width:
+        0;
+
+      min-height:
+        min(
+          790px,
+          calc(
+            100svh - 112px
+          )
+        );
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      cursor:
+        pointer;
+
+      outline:
+        none;
+    }
+
+
+    .holo-system {
+
+      position:
+        absolute;
+
+      z-index:
+        2;
+
+      width:
+        min(
+          720px,
+          94%
+        );
+
+      aspect-ratio:
+        1;
+
+      border:
+        1px solid
+        rgba(
+          20,
+          141,
+          187,
+          0.13
+        );
+
+      border-radius:
+        50%;
+
+      pointer-events:
+        none;
+
+      animation:
+        orbitSpin
+        24s linear
+        infinite;
+    }
+
+
+    .holo-system::before,
+    .holo-system::after {
+
+      content:
+        "";
+
+      position:
+        absolute;
+
+      border-radius:
+        50%;
+    }
+
+
+    .holo-system::before {
+
+      inset:
+        10%;
+
+      border:
+        1px dashed
+        rgba(
+          37,
+          180,
+          199,
+          0.20
+        );
+    }
+
+
+    .holo-system::after {
+
+      inset:
+        24%;
+
+      border:
+        1px solid
+        rgba(
+          38,
+          105,
+          190,
+          0.11
+        );
+    }
+
+
+    .capi-image-wrap {
+
+      position:
+        relative;
+
+      z-index:
+        3;
+
+      width:
+        min(
+          980px,
+          145%
+        );
+
+      height:
+        min(
+          860px,
+          calc(
+            100svh - 88px
+          )
+        );
+
+      min-height:
+        700px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      transform:
+        translate3d(
+          var(--mx),
+          var(--my),
+          0
+        );
+
+      transition:
+        transform
+        0.16s ease-out;
+
+      pointer-events:
+        none;
+    }
+
+
+    #capiGif {
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      display:
+        block;
+
+      object-fit:
+        contain;
+
+      object-position:
+        50% 60%;
+
+      mix-blend-mode:
+        multiply;
+
+      filter:
+        contrast(1.035)
+        saturate(1.045)
+        drop-shadow(
+          0 30px 32px
+          rgba(
+            20,
+            89,
+            120,
+            0.09
+          )
+        );
+
+      transform:
+        scale(1.34);
+
+      transform-origin:
+        50% 62%;
+
+      transition:
+        0.3s ease;
+
+      user-select:
+        none;
+
+      -webkit-user-drag:
+        none;
+    }
+
+
+    .capi-area:hover #capiGif {
+
+      transform:
+        scale(1.39);
+    }
+
+
+    /* =====================================================
+       CARGANDO CAPI
+       ===================================================== */
+
+    .loader-pill {
+
+      position:
+        absolute;
+
+      z-index:
+        10;
+
+      top:
+        50%;
+
+      left:
+        50%;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        10px;
+
+      padding:
+        13px 16px;
+
+      border:
+        1px solid
+        #cce8ef;
+
+      border-radius:
+        999px;
+
+      color:
+        #4f768c;
+
+      background:
+        #ffffff;
+
+      box-shadow:
+        var(--shadow);
+
+      transform:
+        translate(
+          -50%,
+          -50%
+        );
+
+      font-size:
+        0.7rem;
+
+      font-weight:
+        800;
+    }
+
+
+    .loader-pill.hidden {
+
+      opacity:
+        0;
+
+      visibility:
+        hidden;
+    }
+
+
+    .loader-pill i {
+
+      width:
+        18px;
+
+      height:
+        18px;
+
+      border:
+        2px solid
+        #d9edf1;
+
+      border-top-color:
+        #0797a6;
+
+      border-radius:
+        50%;
+
+      animation:
+        loaderSpin
+        0.75s linear
+        infinite;
+    }
+
+
+    /* =====================================================
+       MENSAJE CAPI
+       ===================================================== */
+
+    .capi-bubble {
+
+      position:
+        absolute;
+
+      z-index:
+        8;
+
+      top:
+        10%;
+
+      right:
+        0;
+
+      max-width:
+        260px;
+
+      padding:
+        13px 15px;
+
+      border:
+        1px solid
+        #c5e7ed;
+
+      border-radius:
+        18px
+        18px
+        5px
+        18px;
+
+      color:
+        var(--navy);
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.95
+        );
+
+      box-shadow:
+        0 18px 45px
+        rgba(
+          15,
+          91,
+          127,
+          0.11
+        );
+
+      font-size:
+        0.78rem;
+
+      font-weight:
+        700;
+
+      line-height:
+        1.48;
+
+      opacity:
+        0;
+
+      transform:
+        translateY(-8px);
+
+      transition:
+        0.25s ease;
+
+      pointer-events:
+        none;
+    }
+
+
+    .capi-bubble.show {
+
+      opacity:
+        1;
+
+      transform:
+        translateY(0);
+    }
+
+
+    .capi-status {
+
+      position:
+        absolute;
+
+      z-index:
+        7;
+
+      left:
+        5%;
+
+      bottom:
+        9%;
+
+      min-height:
+        42px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        9px;
+
+      padding:
+        0 13px;
+
+      border:
+        1px solid
+        #d2eaf0;
+
+      border-radius:
+        14px;
+
+      color:
+        #557589;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.94
+        );
+
+      font-size:
+        0.67rem;
+
+      font-weight:
+        800;
+
+      text-transform:
+        uppercase;
+
+      pointer-events:
+        none;
+    }
+
+
+    .capi-status i {
+
+      width:
+        8px;
+
+      height:
+        8px;
+
+      border-radius:
+        50%;
+
+      background:
+        var(--mint);
+    }
+
+
+    /* =====================================================
+       NUEVO:
+       CÍRCULOS MULTIMEDIA ALREDEDOR DE CAPI
+       ===================================================== */
+
+    html.capi-media-open,
+    html.capi-media-open body {
+
+      overflow:
+        hidden;
+    }
+
+
+    .capi-media-layer {
+
+      position:
+        absolute;
+
+      z-index:
+        6;
+
+      inset:
+        0;
+
+      pointer-events:
+        none;
+    }
+
+
+    .capi-media-orbit {
+
+      --ig-scale:
+        0.22;
+
+      position:
+        absolute;
+
+      left:
+        var(--orbit-left);
+
+      top:
+        var(--orbit-top);
+
+      width:
+        clamp(
+          78px,
+          6.4vw,
+          106px
+        );
+
+      aspect-ratio:
+        1;
+
+      transform:
+        translate(
+          -50%,
+          -50%
+        );
+
+      pointer-events:
+        auto;
+
+      cursor:
+        pointer;
+
+      outline:
+        none;
+    }
+
+
+    .capi-media-shell {
+
+      position:
+        relative;
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      padding:
+        3px;
+
+      border-radius:
+        50%;
+
+      background:
+        conic-gradient(
+          from 210deg,
+          #36d4dc,
+          #126bc3,
+          #7658d8,
+          #27be91,
+          #36d4dc
+        );
+
+      box-shadow:
+
+        0 16px 40px
+        rgba(
+          10,
+          93,
+          137,
+          0.16
+        ),
+
+        0 0 0 7px
+        rgba(
+          255,
+          255,
+          255,
+          0.72
+        );
+
+      animation:
+        capiMediaFloat
+        5.4s
+        ease-in-out
+        infinite;
+
+      animation-delay:
+        var(
+          --orbit-delay,
+          0s
+        );
+
+      transition:
+
+        box-shadow
+        0.25s ease,
+
+        filter
+        0.25s ease;
+    }
+
+
+    .capi-media-shell::before {
+
+      content:
+        "";
+
+      position:
+        absolute;
+
+      inset:
+        -9px;
+
+      border:
+        1px solid
+        rgba(
+          54,
+          212,
+          220,
+          0.20
+        );
+
+      border-radius:
+        50%;
+
+      box-shadow:
+        0 0 24px
+        rgba(
+          54,
+          212,
+          220,
+          0.12
+        );
+
+      pointer-events:
+        none;
+    }
+
+
+    .capi-media-preview {
+
+      position:
+        relative;
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      overflow:
+        hidden;
+
+      border:
+        2px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.95
+        );
+
+      border-radius:
+        50%;
+
+      background:
+        #ffffff;
+    }
+
+
+    .capi-media-fallback {
+
+      position:
+        absolute;
+
+      z-index:
+        1;
+
+      inset:
+        0;
+
+      display:
+        grid;
+
+      place-content:
+        center;
+
+      gap:
+        3px;
+
+      text-align:
+        center;
+
+      color:
+        #ffffff;
+
+      background:
+
+        radial-gradient(
+          circle
+          at 30% 25%,
+          rgba(
+            255,
+            255,
+            255,
+            0.22
+          ),
+          transparent 28%
+        ),
+
+        linear-gradient(
+          145deg,
+          #36d4dc,
+          #126bc3 50%,
+          #7658d8
+        );
+    }
+
+
+    .capi-media-instagram-mark {
+
+      font-size:
+        1.45rem;
+
+      font-weight:
+        900;
+
+      line-height:
+        1;
+    }
+
+
+    .capi-media-fallback small {
+
+      font-size:
+        0.48rem;
+
+      font-weight:
+        900;
+
+      letter-spacing:
+        0.12em;
+    }
+
+
+    /*
+     * Instagram se carga dentro del círculo.
+     * Lo escalamos para convertirlo
+     * visualmente en una miniatura.
+     */
+
+    .capi-media-frame {
+
+      position:
+        absolute;
+
+      z-index:
+        2;
+
+      left:
+        50%;
+
+      top:
+        54%;
+
+      width:
+        540px;
+
+      height:
+        720px;
+
+      border:
+        0;
+
+      background:
+        #ffffff;
+
+      transform:
+        translate(
+          -50%,
+          -50%
+        )
+        scale(
+          var(--ig-scale)
+        );
+
+      transform-origin:
+        center;
+
+      opacity:
+        0;
+
+      pointer-events:
+        none;
+
+      transition:
+        opacity
+        0.35s ease;
+    }
+
+
+    .capi-media-orbit.is-loaded
+    .capi-media-frame {
+
+      opacity:
+        1;
+    }
+
+
+    .capi-media-badge {
+
+      position:
+        absolute;
+
+      z-index:
+        4;
+
+      right:
+        -3px;
+
+      bottom:
+        -2px;
+
+      width:
+        28px;
+
+      height:
+        28px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      border:
+        3px solid
+        #ffffff;
+
+      border-radius:
+        50%;
+
+      color:
+        #ffffff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #0eb8c8,
+          #126ac0
+        );
+
+      box-shadow:
+        0 8px 20px
+        rgba(
+          10,
+          102,
+          157,
+          0.24
+        );
+
+      font-size:
+        0.66rem;
+
+      font-weight:
+        900;
+    }
+
+
+    .capi-media-orbit:hover
+    .capi-media-shell {
+
+      animation-play-state:
+        paused;
+
+      filter:
+        saturate(1.08)
+        brightness(1.025);
+
+      box-shadow:
+
+        0 22px 48px
+        rgba(
+          10,
+          93,
+          137,
+          0.22
+        ),
+
+        0 0 0 8px
+        rgba(
+          255,
+          255,
+          255,
+          0.88
+        ),
+
+        0 0 32px
+        rgba(
+          54,
+          212,
+          220,
+          0.18
+        );
+    }
+
+
+    .capi-media-orbit:focus-visible
+    .capi-media-shell {
+
+      outline:
+        4px solid
+        rgba(
+          54,
+          212,
+          220,
+          0.28
+        );
+
+      outline-offset:
+        6px;
+    }
+
+
+    /* =====================================================
+       MENÚ LATERAL
+       ===================================================== */
+
+    .drawer-backdrop {
+
+      position:
+        fixed;
+
+      z-index:
+        30;
+
+      inset:
+        0;
+
+      visibility:
+        hidden;
+
+      opacity:
+        0;
+
+      background:
+        rgba(
+          21,
+          62,
+          87,
+          0.18
+        );
+
+      backdrop-filter:
+        blur(5px);
+
+      transition:
+        0.22s ease;
+    }
+
+
+    .drawer-backdrop.open {
+
+      visibility:
+        visible;
+
+      opacity:
+        1;
+    }
+
+
+    .drawer {
+
+      position:
+        fixed;
+
+      z-index:
+        31;
+
+      top:
+        14px;
+
+      right:
+        14px;
+
+      bottom:
+        14px;
+
+      width:
+        min(
+          420px,
+          calc(
+            100% - 28px
+          )
+        );
+
+      padding:
+        24px;
+
+      border:
+        1px solid
+        #d9ebf1;
+
+      border-radius:
+        27px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.98
+        );
+
+      box-shadow:
+        -28px 0 75px
+        rgba(
+          13,
+          65,
+          95,
+          0.16
+        );
+
+      transform:
+        translateX(
+          calc(
+            100% + 34px
+          )
+        );
+
+      transition:
+        0.27s
+        cubic-bezier(
+          0.2,
+          0.8,
+          0.2,
+          1
+        );
+
+      overflow-y:
+        auto;
+    }
+
+
+    .drawer.open {
+
+      transform:
+        translateX(0);
+    }
+
+
+    .drawer-head {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        14px;
+    }
+
+
+    .drawer-head h2 {
+
+      margin:
+        0;
+
+      color:
+        var(--navy);
+
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        1.3rem;
+    }
+
+
+    .drawer-intro {
+
+      margin:
+        18px 0;
+
+      padding:
+        15px;
+
+      border-radius:
+        17px;
+
+      color:
+        var(--muted);
+
+      background:
+        var(--soft);
+
+      font-size:
+        0.83rem;
+
+      line-height:
+        1.6;
+    }
+
+
+    .module-list {
+
+      display:
+        grid;
+
+      gap:
+        10px;
+    }
+
+
+    .module-link {
+
+      min-height:
+        70px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        13px;
+
+      padding:
+        11px 13px;
+
+      border:
+        1px solid
+        var(--line);
+
+      border-radius:
+        17px;
+
+      color:
+        var(--ink);
+
+      background:
+        #ffffff;
+
+      text-decoration:
+        none;
+
+      transition:
+        0.18s ease;
+    }
+
+
+    .module-link:hover {
+
+      transform:
+        translateX(-4px);
+
+      border-color:
+        #a9dce6;
+
+      box-shadow:
+        0 12px 28px
+        rgba(
+          14,
+          87,
+          123,
+          0.07
+        );
+    }
+
+
+    .module-icon {
+
+      width:
+        38px;
+
+      height:
+        38px;
+
+      flex:
+        0 0 auto;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      border-radius:
+        12px;
+
+      color:
+        var(--module);
+
+      background:
+        #eef9fb;
+    }
+
+
+    .module-icon svg {
+
+      width:
+        18px;
+    }
+
+
+    .module-copy {
+
+      display:
+        grid;
+
+      gap:
+        3px;
+    }
+
+
+    .module-copy b {
+
+      color:
+        var(--navy);
+
+      font-size:
+        0.82rem;
+    }
+
+
+    .module-copy small {
+
+      color:
+        #7d95a7;
+
+      font-size:
+        0.67rem;
+    }
+
+
+    .module-arrow {
+
+      width:
+        17px;
+
+      margin-left:
+        auto;
+
+      color:
+        #87a0b1;
+    }
+
+
+    /* =====================================================
+       CHAT CAPI
+       ===================================================== */
+
+    .chat-launcher {
+
+      position:
+        fixed;
+
+      z-index:
+        60;
+
+      right:
+        22px;
+
+      bottom:
+        22px;
+
+      min-height:
+        56px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        9px;
+
+      padding:
+        0 17px;
+
+      border:
+        0;
+
+      border-radius:
+        999px;
+
+      color:
+        #ffffff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #0eb8c8,
+          #126ac0
+        );
+
+      box-shadow:
+        0 18px 45px
+        rgba(
+          10,
+          102,
+          157,
+          0.28
+        );
+
+      font-size:
+        0.76rem;
+
+      font-weight:
+        800;
+    }
+
+
+    .chat-launcher[hidden] {
+
+      display:
+        none;
+    }
+
+
+    .chat-launcher svg {
+
+      width:
+        20px;
+    }
+
+
+    .chat-panel {
+
+      position:
+        fixed;
+
+      z-index:
+        61;
+
+      right:
+        22px;
+
+      bottom:
+        22px;
+
+      width:
+        min(
+          410px,
+          calc(
+            100% - 28px
+          )
+        );
+
+      height:
+        min(
+          650px,
+          calc(
+            100svh - 32px
+          )
+        );
+
+      display:
+        grid;
+
+      grid-template-rows:
+        auto
+        1fr
+        auto
+        auto;
+
+      border:
+        1px solid
+        #d5eaf0;
+
+      border-radius:
+        25px;
+
+      background:
+        #ffffff;
+
+      box-shadow:
+        0 28px 80px
+        rgba(
+          9,
+          67,
+          103,
+          0.22
+        );
+
+      overflow:
+        hidden;
+
+      visibility:
+        hidden;
+
+      opacity:
+        0;
+
+      transform:
+        translateY(20px)
+        scale(0.97);
+
+      transition:
+        0.24s ease;
+    }
+
+
+    .chat-panel.open {
+
+      visibility:
+        visible;
+
+      opacity:
+        1;
+
+      transform:
+        none;
+    }
+
+
+    .chat-head {
+
+      min-height:
+        74px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        11px;
+
+      padding:
+        12px 14px;
+
+      color:
+        #ffffff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #0bb1c3,
+          #1269bd
+        );
+    }
+
+
+    .chat-avatar {
+
+      width:
+        48px;
+
+      height:
+        48px;
+
+      overflow:
+        hidden;
+
+      flex:
+        0 0 auto;
+
+      border:
+        2px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.72
+        );
+
+      border-radius:
+        50%;
+
+      background:
+        #ffffff;
+    }
+
+
+    .chat-avatar img {
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      object-fit:
+        cover;
+
+      mix-blend-mode:
+        multiply;
+    }
+
+
+    .chat-title {
+
+      display:
+        grid;
+
+      gap:
+        2px;
+    }
+
+
+    .chat-title b {
+
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        0.95rem;
+    }
+
+
+    .chat-title small {
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.84
+        );
+
+      font-size:
+        0.63rem;
+
+      font-weight:
+        700;
+    }
+
+
+    .chat-head-actions {
+
+      margin-left:
+        auto;
+
+      display:
+        flex;
+
+      gap:
+        7px;
+    }
+
+
+    .chat-icon-btn {
+
+      width:
+        36px;
+
+      height:
+        36px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.25
+        );
+
+      border-radius:
+        11px;
+
+      color:
+        #ffffff;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.12
+        );
+    }
+
+
+    .chat-icon-btn svg {
+
+      width:
+        18px;
+    }
+
+
+    .chat-messages {
+
+      min-height:
+        0;
+
+      padding:
+        17px 14px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        10px;
+
+      overflow-y:
+        auto;
+
+      background:
+        #f7fbfd;
+    }
+
+
+    .chat-message {
+
+      max-width:
+        86%;
+
+      padding:
+        11px 13px;
+
+      border-radius:
+        17px;
+
+      font-size:
+        0.78rem;
+
+      line-height:
+        1.55;
+    }
+
+
+    .chat-message.capi {
+
+      align-self:
+        flex-start;
+
+      border:
+        1px solid
+        #d5eaf0;
+
+      border-radius:
+        6px
+        17px
+        17px
+        17px;
+
+      background:
+        #ffffff;
+    }
+
+
+    .chat-message.user {
+
+      align-self:
+        flex-end;
+
+      border-radius:
+        17px
+        6px
+        17px
+        17px;
+
+      color:
+        #ffffff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #129cae,
+          #176fc3
+        );
+    }
+
+
+    .chat-message.thinking {
+
+      display:
+        flex;
+
+      gap:
+        5px;
+
+      width:
+        fit-content;
+    }
+
+
+    .chat-message.thinking i {
+
+      width:
+        6px;
+
+      height:
+        6px;
+
+      border-radius:
+        50%;
+
+      background:
+        #58a9bd;
+
+      animation:
+        thinking
+        1s
+        infinite;
+    }
+
+
+    .chat-action {
+
+      display:
+        inline-block;
+
+      margin-top:
+        9px;
+
+      padding:
+        8px 11px;
+
+      border-radius:
+        10px;
+
+      color:
+        #0a6fa4;
+
+      background:
+        #eaf8fb;
+
+      text-decoration:
+        none;
+
+      font-size:
+        0.68rem;
+
+      font-weight:
+        800;
+    }
+
+
+    .suggestions {
+
+      display:
+        flex;
+
+      gap:
+        7px;
+
+      padding:
+        9px 12px 2px;
+
+      overflow-x:
+        auto;
+
+      background:
+        #ffffff;
+    }
+
+
+    .suggestion {
+
+      flex:
+        0 0 auto;
+
+      min-height:
+        32px;
+
+      padding:
+        0 11px;
+
+      border:
+        1px solid
+        #cce7ed;
+
+      border-radius:
+        999px;
+
+      color:
+        #247c92;
+
+      background:
+        #f3fcfd;
+
+      font-size:
+        0.65rem;
+
+      font-weight:
+        800;
+    }
+
+
+    .compose-wrap {
+
+      padding:
+        10px 12px 12px;
+
+      background:
+        #ffffff;
+    }
+
+
+    .chat-form {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        40px
+        1fr
+        42px;
+
+      align-items:
+        center;
+
+      gap:
+        7px;
+
+      padding:
+        6px;
+
+      border:
+        1px solid
+        #d2e8ee;
+
+      border-radius:
+        16px;
+
+      background:
+        #f9fcfd;
+    }
+
+
+    .chat-form:focus-within {
+
+      border-color:
+        #78cfd9;
+
+      box-shadow:
+        0 0 0 4px
+        rgba(
+          54,
+          190,
+          210,
+          0.09
+        );
+    }
+
+
+    .chat-input {
+
+      width:
+        100%;
+
+      min-width:
+        0;
+
+      border:
+        0;
+
+      outline:
+        0;
+
+      color:
+        var(--ink);
+
+      background:
+        transparent;
+
+      font-size:
+        0.76rem;
+    }
+
+
+    .mic-btn,
+    .send-btn {
+
+      width:
+        40px;
+
+      height:
+        40px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      border:
+        0;
+
+      border-radius:
+        12px;
+    }
+
+
+    .mic-btn {
+
+      color:
+        #2588a0;
+
+      background:
+        transparent;
+    }
+
+
+    .mic-btn.listening {
+
+      color:
+        #ffffff;
+
+      background:
+        #ef5f70;
+    }
+
+
+    .send-btn {
+
+      color:
+        #ffffff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #0ab4c5,
+          #126bc1
+        );
+    }
+
+
+    .mic-btn svg,
+    .send-btn svg {
+
+      width:
+        18px;
+    }
+
+
+    .disclaimer {
+
+      display:
+        block;
+
+      margin-top:
+        7px;
+
+      color:
+        #899eac;
+
+      text-align:
+        center;
+
+      font-size:
+        0.56rem;
+    }
+
+
+    /* =====================================================
+       TOAST
+       ===================================================== */
+
+    .toast {
+
+      position:
+        fixed;
+
+      z-index:
+        120;
+
+      left:
+        50%;
+
+      bottom:
+        20px;
+
+      padding:
+        13px 17px;
+
+      border:
+        1px solid
+        #d1e8ee;
+
+      border-radius:
+        14px;
+
+      color:
+        var(--navy);
+
+      background:
+        #ffffff;
+
+      box-shadow:
+        0 18px 45px
+        rgba(
+          11,
+          68,
+          99,
+          0.15
+        );
+
+      opacity:
+        0;
+
+      transform:
+        translate(
+          -50%,
+          28px
+        );
+
+      pointer-events:
+        none;
+
+      transition:
+        0.22s ease;
+
+      font-size:
+        0.8rem;
+
+      font-weight:
+        800;
+    }
+
+
+    .toast.show {
+
+      opacity:
+        1;
+
+      transform:
+        translate(
+          -50%,
+          0
+        );
+    }
+
+
+    /* =====================================================
+       MODAL INSTAGRAM
+       ===================================================== */
+
+    .capi-media-modal-backdrop {
+
+      position:
+        fixed;
+
+      z-index:
+        100;
+
+      inset:
+        0;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      padding:
+        18px;
+
+      background:
+        rgba(
+          9,
+          42,
+          64,
+          0.32
+        );
+
+      backdrop-filter:
+        blur(14px);
+
+      -webkit-backdrop-filter:
+        blur(14px);
+
+      opacity:
+        0;
+
+      visibility:
+        hidden;
+
+      pointer-events:
+        none;
+
+      transition:
+
+        opacity
+        0.24s ease,
+
+        visibility
+        0.24s ease;
+    }
+
+
+    .capi-media-modal-backdrop.open {
+
+      opacity:
+        1;
+
+      visibility:
+        visible;
+
+      pointer-events:
+        auto;
+    }
+
+
+    .capi-media-modal {
+
+      width:
+        min(
+          560px,
+          100%
+        );
+
+      max-height:
+        calc(
+          100svh - 36px
+        );
+
+      display:
+        grid;
+
+      grid-template-rows:
+        auto
+        minmax(0, 1fr)
+        auto;
+
+      gap:
+        10px;
+
+      padding:
+        14px;
+
+      border:
+        1px solid
+        rgba(
+          204,
+          232,
+          239,
+          0.95
+        );
+
+      border-radius:
+        28px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.98
+        );
+
+      box-shadow:
+        0 34px 100px
+        rgba(
+          8,
+          55,
+          86,
+          0.28
+        );
+
+      transform:
+        translateY(18px)
+        scale(0.97);
+
+      transition:
+        transform
+        0.24s ease;
+    }
+
+
+    .capi-media-modal-backdrop.open
+    .capi-media-modal {
+
+      transform:
+        none;
+    }
+
+
+    .capi-media-modal-head {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        14px;
+
+      padding:
+        3px 3px 3px 7px;
+    }
+
+
+    .capi-media-kicker {
+
+      display:
+        block;
+
+      margin-bottom:
+        3px;
+
+      color:
+        #0993a7;
+
+      font-size:
+        0.56rem;
+
+      font-weight:
+        900;
+
+      letter-spacing:
+        0.14em;
+    }
+
+
+    .capi-media-modal-head h3 {
+
+      margin:
+        0;
+
+      color:
+        var(--navy);
+
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size:
+        1.05rem;
+    }
+
+
+    .capi-media-close {
+
+      width:
+        42px;
+
+      height:
+        42px;
+
+      flex:
+        0 0 auto;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      border:
+        1px solid
+        var(--line);
+
+      border-radius:
+        14px;
+
+      color:
+        var(--blue);
+
+      background:
+        #ffffff;
+
+      font-size:
+        1.45rem;
+
+      line-height:
+        1;
+
+      box-shadow:
+        0 8px 22px
+        rgba(
+          15,
+          91,
+          129,
+          0.07
+        );
+    }
+
+
+    .capi-media-modal-body {
+
+      min-height:
+        0;
+
+      height:
+        min(
+          690px,
+          70svh
+        );
+
+      overflow:
+        hidden;
+
+      border:
+        1px solid
+        #d7ebf0;
+
+      border-radius:
+        20px;
+
+      background:
+        #f5fafc;
+    }
+
+
+    .capi-media-modal-body iframe {
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      display:
+        block;
+
+      border:
+        0;
+
+      background:
+        #ffffff;
+    }
+
+
+    .capi-media-modal-foot {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        12px;
+
+      padding:
+        2px 4px 0;
+
+      color:
+        #7891a3;
+
+      font-size:
+        0.67rem;
+
+      font-weight:
+        800;
+    }
+
+
+    .capi-media-modal-foot a {
+
+      min-height:
+        39px;
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        0 13px;
+
+      border-radius:
+        12px;
+
+      color:
+        #ffffff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #0eb7c8,
+          #126bc1
+        );
+
+      box-shadow:
+        0 10px 24px
+        rgba(
+          14,
+          111,
+          169,
+          0.18
+        );
+
+      text-decoration:
+        none;
+
+      white-space:
+        nowrap;
+    }
+
+
+    /* =====================================================
+       ANIMACIONES
+       ===================================================== */
+
+    @keyframes statusPulse {
+
+      50% {
+
+        box-shadow:
+
+          0 0 0 10px
+          rgba(
+            39,
+            190,
+            145,
+            0
+          ),
+
+          0 0 18px
+          rgba(
+            39,
+            190,
+            145,
+            0.5
+          );
+      }
+    }
+
+
+    @keyframes titleFlow {
+
+      to {
+
+        background-position:
+          170% center;
+      }
+    }
+
+
+    @keyframes orbitSpin {
+
+      to {
+
+        transform:
+          rotate(
+            360deg
+          );
+      }
+    }
+
+
+    @keyframes loaderSpin {
+
+      to {
+
+        transform:
+          rotate(
+            360deg
+          );
+      }
+    }
+
+
+    @keyframes thinking {
+
+      50% {
+
+        opacity:
+          0.3;
+
+        transform:
+          translateY(
+            -3px
+          );
+      }
+    }
+
+
+    @keyframes capiMediaFloat {
+
+      0%,
+      100% {
+
+        transform:
+          translateY(0);
+      }
+
+      50% {
+
+        transform:
+          translateY(
+            -7px
+          );
+      }
+    }
+
+
+    /* =====================================================
+       TABLET
+       ===================================================== */
+
+    @media (
+      max-width:
+      1120px
+    ) {
+
+      .hero {
+
+        grid-template-columns:
+          minmax(0, 0.92fr)
+          minmax(470px, 1.08fr);
+
+        gap:
+          18px;
+      }
+
+
+      .feature-row {
+
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+
+      .feature:last-child {
+
+        grid-column:
+          1 / -1;
+      }
+
+
+      .capi-area {
+
+        min-height:
+          700px;
+      }
+
+
+      .capi-image-wrap {
+
+        width:
+          138%;
+
+        height:
+          740px;
+
+        min-height:
+          620px;
+      }
+    }
+
+
+    @media (
+      max-width:
+      880px
+    ) {
+
+      .topbar,
+      .hero {
+
+        width:
+          min(
+            100% - 32px,
+            740px
+          );
+      }
+
+
+      .topbar {
+
+        min-height:
+          78px;
+      }
+
+
+      .status-chip {
+
+        min-height:
+          39px;
+
+        padding:
+          0 11px;
+
+        font-size:
+          0.62rem;
+      }
+
+
+      .hero {
+
+        min-height:
+          auto;
+
+        padding:
+          34px 0 58px;
+
+        grid-template-columns:
+          1fr;
+
+        gap:
+          10px;
+      }
+
+
+      .copy {
+
+        max-width:
+          none;
+      }
+
+
+      h1 {
+
+        font-size:
+          clamp(
+            4.7rem,
+            16vw,
+            7rem
+          );
+      }
+
+
+      .capi-area {
+
+        width:
+          min(
+            730px,
+            100%
+          );
+
+        min-height:
+          700px;
+
+        margin:
+          0 auto;
+      }
+
+
+      .capi-image-wrap {
+
+        width:
+          138%;
+
+        height:
+          730px;
+      }
+
+
+      #networkCanvas,
+      .tech-grid {
+
+        opacity:
+          0.2;
+
+        mask-image:
+          none;
+
+        -webkit-mask-image:
+          none;
+      }
+
+
+      .capi-media-orbit {
+
+        --ig-scale:
+          0.19;
+
+        width:
+          82px;
+      }
+
+
+      .capi-media-badge {
+
+        width:
+          25px;
+
+        height:
+          25px;
+
+        font-size:
+          0.58rem;
+      }
+    }
+
+
+    /* =====================================================
+       CELULAR
+       ===================================================== */
+
+    @media (
+      max-width:
+      560px
+    ) {
+
+      .topbar,
+      .hero {
+
+        width:
+          min(
+            100% - 24px,
+            520px
+          );
+      }
+
+
+      .topbar {
+
+        min-height:
+          71px;
+      }
+
+
+      .logo-shell {
+
+        width:
+          44px;
+
+        height:
+          44px;
+
+        padding:
+          6px;
+
+        border-radius:
+          14px;
+      }
+
+
+      .brand-copy {
+
+        display:
+          none;
+      }
+
+
+      .top-actions {
+
+        gap:
+          7px;
+      }
+
+
+      .status-chip {
+
+        min-height:
+          38px;
+
+        padding:
+          0 10px;
+
+        font-size:
+          0.59rem;
+      }
+
+
+      .menu-btn {
+
+        width:
+          42px;
+
+        height:
+          42px;
+      }
+
+
+      .hero {
+
+        padding-top:
+          23px;
+
+        gap:
+          2px;
+      }
+
+
+      .eyebrow {
+
+        margin-bottom:
+          16px;
+
+        font-size:
+          0.6rem;
+      }
+
+
+      h1 {
+
+        font-size:
+          clamp(
+            3.85rem,
+            19vw,
+            5.5rem
+          );
+      }
+
+
+      .word-bolivia {
+
+        margin-top:
+          12px;
+
+        font-size:
+          0.32em;
+      }
+
+
+      .subtitle {
+
+        margin-top:
+          22px;
+
+        font-size:
+          0.96rem;
+      }
+
+
+      .description {
+
+        font-size:
+          0.85rem;
+      }
+
+
+      .feature-row {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .feature:last-child {
+
+        grid-column:
+          auto;
+      }
+
+
+      .actions {
+
+        gap:
+          9px;
+      }
+
+
+      .primary,
+      .secondary {
+
+        min-height:
+          49px;
+
+        padding:
+          0 15px;
+
+        font-size:
+          0.78rem;
+      }
+
+
+      .country-line {
+
+        font-size:
+          0.62rem;
+
+        line-height:
+          1.45;
+      }
+
+
+      .capi-area {
+
+        min-height:
+          560px;
+      }
+
+
+      .capi-image-wrap {
+
+        width:
+          148%;
+
+        height:
+          580px;
+
+        min-height:
+          520px;
+      }
+
+
+      #capiGif {
+
+        transform:
+          scale(
+            1.24
+          );
+
+        transform-origin:
+          50% 60%;
+      }
+
+
+      .capi-area:hover
+      #capiGif {
+
+        transform:
+          scale(
+            1.24
+          );
+      }
+
+
+      .capi-bubble {
+
+        top:
+          8%;
+
+        right:
+          1%;
+
+        max-width:
+          190px;
+
+        font-size:
+          0.68rem;
+      }
+
+
+      .capi-status {
+
+        left:
+          4%;
+
+        bottom:
+          7%;
+
+        min-height:
+          37px;
+
+        font-size:
+          0.58rem;
+      }
+
+
+      .chat-launcher {
+
+        right:
+          12px;
+
+        bottom:
+          12px;
+
+        min-height:
+          50px;
+
+        font-size:
+          0.67rem;
+      }
+
+
+      .chat-panel {
+
+        right:
+          8px;
+
+        bottom:
+          8px;
+
+        width:
+          calc(
+            100% - 16px
+          );
+
+        height:
+          calc(
+            100svh - 16px
+          );
+      }
+
+
+      .capi-media-orbit {
+
+        --ig-scale:
+          0.16;
+
+        width:
+          64px;
+      }
+
+
+      .capi-media-shell {
+
+        padding:
+          2px;
+
+        box-shadow:
+
+          0 11px 26px
+          rgba(
+            10,
+            93,
+            137,
+            0.14
+          ),
+
+          0 0 0 5px
+          rgba(
+            255,
+            255,
+            255,
+            0.78
+          );
+      }
+
+
+      .capi-media-shell::before {
+
+        inset:
+          -6px;
+      }
+
+
+      .capi-media-badge {
+
+        width:
+          21px;
+
+        height:
+          21px;
+
+        right:
+          -2px;
+
+        bottom:
+          -1px;
+
+        border-width:
+          2px;
+
+        font-size:
+          0.48rem;
+      }
+
+
+      .capi-media-modal-backdrop {
+
+        padding:
+          8px;
+      }
+
+
+      .capi-media-modal {
+
+        max-height:
+          calc(
+            100svh - 16px
+          );
+
+        padding:
+          10px;
+
+        border-radius:
+          22px;
+      }
+
+
+      .capi-media-modal-body {
+
+        height:
+          72svh;
+
+        border-radius:
+          16px;
+      }
+
+
+      .capi-media-modal-foot {
+
+        font-size:
+          0.60rem;
+      }
+
+
+      .capi-media-modal-foot a {
+
+        min-height:
+          36px;
+
+        padding:
+          0 10px;
+
+        font-size:
+          0.62rem;
+      }
+    }
+
+
+    @media (
+      hover:
+      none
+    ) {
+
+      .capi-image-wrap {
+
+        transform:
+          none !important;
+      }
+    }
+
+
+    @media (
+      prefers-reduced-motion:
+      reduce
+    ) {
+
+      *,
+      *::before,
+      *::after {
+
+        animation-duration:
+          0.001ms !important;
+
+        animation-iteration-count:
+          1 !important;
+
+        transition-duration:
+          0.001ms !important;
+      }
+
+
+      .capi-media-shell {
+
+        animation:
+          none !important;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <div class="app">
+
+    <canvas
+      id="networkCanvas"
+      aria-hidden="true"
+    ></canvas>
+
+
+    <div
+      class="tech-grid"
+      aria-hidden="true"
+    ></div>
+
+
+    <!-- ==================================================
+         CABECERA
+         ================================================== -->
+
+    <header class="topbar">
+
+      <a
+        class="brand"
+        href="#inicio"
+        aria-label="Volver al inicio"
+      >
+
+        <span class="logo-shell">
+
+          <img
+            id="centreLogo"
+            alt="Ícono del Centro NIHR LatAm"
+          >
+
+        </span>
+
+
+        <span class="brand-copy">
+
+          <strong>
+            Centro NIHR LatAm
+          </strong>
+
+          <small>
+            Nodo Bolivia · MEL
+          </small>
+
+        </span>
+
+      </a>
+
+
+      <div class="top-actions">
+
+        <button
+          class="status-chip"
+          id="statusExploreButton"
+          type="button"
+          aria-label="CAPIMEL Bolivia activo. Abrir los módulos"
+          title="Explorar CAPIMEL"
+        >
+
+          <i></i>
+
+          CAPIMEL Bolivia activo
+
+        </button>
+
+
+        <button
+          class="menu-btn"
+          id="menuButton"
+          type="button"
+          aria-label="Abrir menú"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+
+            <path
+              d="M5 7h14M5 12h14M5 17h14"
+            ></path>
+
+          </svg>
+
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- ==================================================
+         PORTADA
+         ================================================== -->
+
+    <main
+      class="hero"
+      id="inicio"
+    >
+
+
+      <!-- TEXTO -->
+
+      <section class="copy">
+
+        <div class="eyebrow">
+
+          <i></i>
+
+          Inteligencia institucional · Bolivia
+
+        </div>
+
+
+        <h1>
+
+          <span class="word-capimel">
+            CAPIMEL
+          </span>
+
+          <span class="word-bolivia">
+            Bolivia
+          </span>
+
+        </h1>
+
+
+        <p
+          class="subtitle"
+          id="subtitleText"
+        >
+
+          Centro de Análisis del Progreso Institucional para el Monitoreo, la Evaluación y el Aprendizaje
+
+        </p>
+
+
+        <p
+          class="description"
+          id="descriptionText"
+        >
+
+          Un espacio inteligente para transformar datos, evidencia y aprendizaje en decisiones que fortalecen el trabajo del Centro NIHR LatAm en Bolivia.
+
+        </p>
+
+
+        <div class="feature-row">
+
+
+          <article
+            class="feature"
+            style="--feature:#08b8ca"
+          >
+
+            <b>
+              01 · Monitorear
+            </b>
+
+            <span>
+              Avances visibles y seguimiento continuo.
+            </span>
+
+          </article>
+
+
+          <article
+            class="feature"
+            style="--feature:#1774d1"
+          >
+
+            <b>
+              02 · Evaluar
+            </b>
+
+            <span>
+              Evidencia clara para tomar decisiones.
+            </span>
+
+          </article>
+
+
+          <article
+            class="feature"
+            style="--feature:#7559d9"
+          >
+
+            <b>
+              03 · Aprender
+            </b>
+
+            <span>
+              Conocimiento que mejora nuestros procesos.
+            </span>
+
+          </article>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="primary"
+            id="enterButton"
+            type="button"
+          >
+
+            Explorar CAPIMEL
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+              ></path>
+
+            </svg>
+
+          </button>
+
+
+          <button
+            class="secondary"
+            id="meetCapi"
+            type="button"
+          >
+
+            Hablar con CAPI
+
+          </button>
+
+        </div>
+
+
+        <div class="country-line">
+
+          <i></i>
+
+          Diseñado exclusivamente para el equipo del Centro NIHR LatAm en Bolivia
+
+        </div>
+
+      </section>
+
+
+      <!-- ==================================================
+           CAPI
+           ================================================== -->
+
+      <section
+        class="capi-area"
+        id="capiArea"
+        role="button"
+        tabindex="0"
+        aria-label="Hablar con CAPI"
+      >
+
+
+        <div
+          class="holo-system"
+          aria-hidden="true"
+        ></div>
+
+
+        <div
+          class="loader-pill"
+          id="assetLoader"
+        >
+
+          <i></i>
+
+          <span>
+            Conectando a CAPI
+          </span>
+
+        </div>
+
+
+        <div class="capi-image-wrap">
+
+          <img
+            id="capiGif"
+            alt="CAPI, capibara animado de CAPIMEL Bolivia"
+            draggable="false"
+          >
+
+        </div>
+
+
+        <div
+          class="capi-bubble"
+          id="capiBubble"
+        >
+
+          ¡Hola! Soy CAPI.
+          Toca mi imagen para conversar conmigo.
+
+        </div>
+
+
+        <div class="capi-status">
+
+          <i></i>
+
+          <span id="connectionText">
+
+            Sincronizando
+
+          </span>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- ====================================================
+       PANEL DE MÓDULOS
+       ==================================================== -->
+
+  <div
+    class="drawer-backdrop"
+    id="drawerBackdrop"
+  ></div>
+
+
+  <aside
+    class="drawer"
+    id="drawer"
+    aria-hidden="true"
+    aria-label="Explorar CAPIMEL"
+  >
+
+    <div class="drawer-head">
+
+      <h2>
+        Explorar CAPIMEL
+      </h2>
+
+
+      <button
+        class="close-btn"
+        id="closeButton"
+        type="button"
+        aria-label="Cerrar menú"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+
+          <path
+            d="M6 6l12 12M18 6 6 18"
+          ></path>
+
+        </svg>
+
+      </button>
+
+    </div>
+
+
+    <p class="drawer-intro">
+
+      Selecciona una herramienta del nodo Bolivia
+      para monitorear, evaluar y transformar
+      la evidencia en aprendizaje institucional.
+
+    </p>
+
+
+    <nav
+      class="module-list"
+      id="moduleList"
+    ></nav>
+
+  </aside>
+
+
+  <!-- ====================================================
+       BOTÓN CHAT
+       ==================================================== -->
+
+  <button
+    class="chat-launcher"
+    id="chatLauncher"
+    type="button"
+    aria-label="Preguntarle a CAPI"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+
+      <path
+        d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"
+      ></path>
+
+    </svg>
+
+    Pregúntale a CAPI
+
+  </button>
+
+
+  <!-- ====================================================
+       CHAT
+       ==================================================== -->
+
+  <section
+    class="chat-panel"
+    id="chatPanel"
+    aria-hidden="true"
+    aria-label="Chat con CAPI"
+  >
+
+
+    <header class="chat-head">
+
+
+      <span class="chat-avatar">
+
+        <img
+          id="chatAvatar"
+          alt="CAPI"
+        >
+
+      </span>
+
+
+      <span class="chat-title">
+
+        <b>
+          CAPI
+        </b>
+
+        <small>
+          Asistente de CAPIMEL Bolivia
+        </small>
+
+      </span>
+
+
+      <span class="chat-head-actions">
+
+
+        <button
+          class="chat-icon-btn"
+          id="voiceButton"
+          type="button"
+          aria-label="Activar o desactivar voz"
+          title="Voz de CAPI"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+
+            <path
+              d="M11 5 6 9H2v6h4l5 4V5Z"
+            ></path>
+
+            <path
+              d="M15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"
+            ></path>
+
+          </svg>
+
+        </button>
+
+
+        <button
+          class="chat-icon-btn"
+          id="closeChat"
+          type="button"
+          aria-label="Cerrar chat"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+
+            <path
+              d="M6 6l12 12M18 6 6 18"
+            ></path>
+
+          </svg>
+
+        </button>
+
+
+      </span>
+
+    </header>
+
+
+    <div
+      class="chat-messages"
+      id="chatMessages"
+      role="log"
+      aria-live="polite"
+    >
+
+      <div class="chat-message capi">
+
+        ¡Hola! Soy CAPI.
+        Puedo explicarte qué es CAPIMEL,
+        qué significa MEL y para qué sirve
+        cada módulo.
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="suggestions"
+      id="suggestions"
+    ></div>
+
+
+    <div class="compose-wrap">
+
+
+      <form
+        class="chat-form"
+        id="chatForm"
+      >
+
+
+        <button
+          class="mic-btn"
+          id="micButton"
+          type="button"
+          aria-label="Usar micrófono"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+
+            <rect
+              x="9"
+              y="3"
+              width="6"
+              height="11"
+              rx="3"
+            ></rect>
+
+            <path
+              d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"
+            ></path>
+
+          </svg>
+
+        </button>
+
+
+        <input
+          class="chat-input"
+          id="chatInput"
+          type="text"
+          autocomplete="off"
+          placeholder="Escribe tu pregunta…"
+          maxlength="500"
+        >
+
+
+        <button
+          class="send-btn"
+          type="submit"
+          aria-label="Enviar pregunta"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+
+            <path
+              d="m3 3 18 9-18 9 4-9-4-9Z"
+            ></path>
+
+            <path
+              d="M7 12h14"
+            ></path>
+
+          </svg>
+
+        </button>
+
+
+      </form>
+
+
+      <small class="disclaimer">
+
+        CAPI brinda orientación institucional general.
+
+      </small>
+
+
+    </div>
+
+  </section>
+
+
+  <div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite"
+  ></div>
+
+
+  <!-- ====================================================
+       JAVASCRIPT
+       ==================================================== -->
+
+  <script>
+
+
+    /* =====================================================
+       CONFIGURACIÓN DE RESPALDO
+       ===================================================== */
+
+    const FALLBACK_CONFIG = {
+
+      country:
+        "Bolivia",
+
+      subtitle:
+        "Centro de Análisis del Progreso Institucional para el Monitoreo, la Evaluación y el Aprendizaje",
+
+      description:
+        "Un espacio inteligente para transformar datos, evidencia y aprendizaje en decisiones que fortalecen el trabajo del Centro NIHR LatAm en Bolivia.",
+
+      capiGifId:
+        "1ZqicVVTYs3MGaYsyM-cLYdCAwMcrii6a",
+
+      logoId:
+        "1bTN-ax6IQEEnvykQCXOCoED6NqzzHsON",
+
+
+      modules: [
+
+        {
+
+          name:
+            "CAPI MasterLab",
+
+          detail:
+            "Monitoreo estratégico",
+
+          description:
+            "Espacio de masterclasses, formación y fortalecimiento de capacidades del equipo.",
+
+          url:
+            "https://script.google.com/a/macros/unifranz.edu.bo/s/AKfycbyy55HnkY5L0c3IC0C8RYw0RIKx4c2T-T6I8xbC35uGqTltsa9_L99jSPMnDl1BwVHE/exec",
+
+          color:
+            "#08b8ca"
+
+        },
+
+
+        {
+
+          name:
+            "Radar de Investigación",
+
+          detail:
+            "Avances y resultados",
+
+          description:
+            "Permite visualizar iniciativas, avances, productos y resultados relacionados con investigación.",
+
+          url:
+            "https://script.google.com/macros/s/AKfycby1g1ipo6zbS3B8bb2tnlbsxYFOdVn43xpXV_OCla_fXrk85mSBot2gw4zIrn8OwPc-XQ/exec",
+
+          color:
+            "#1774d1"
+
+        },
+
+
+        {
+
+          name:
+            "Pulso del Talento",
+
+          detail:
+            "Conocimiento aplicado",
+
+          description:
+            "Apoya el seguimiento del talento, el desempeño y el aprendizaje institucional del equipo.",
+
+          url:
+            "https://script.google.com/a/macros/unifranz.edu.bo/s/AKfycbw_X_3Pdrq8cgcn31HAP9nto3_SLta45Kq3qjxdJ0fFwfcHzmb47b6t90TVx_c8BsnXlw/exec",
+
+          color:
+            "#7559d9"
+
+        },
+
+
+        {
+
+          name:
+            "Centro de Control Financiero",
+
+          detail:
+            "Información consolidada",
+
+          description:
+            "Organiza la consulta y el seguimiento de la información presupuestaria y financiera autorizada.",
+
+          url:
+            "https://script.google.com/a/macros/unifranz.edu.bo/s/AKfycbxlfkasQgdPzsWEbInfxUUM_ethxXQxN1yuOwSq7EbLzZ3-EMpkXS2crB6h17FaT6bcdA/exec",
+
+          color:
+            "#17a979"
+
+        }
+
+      ]
+
+    };
+
+
+    /* =====================================================
+       TUS 7 CONTENIDOS DE INSTAGRAM
+       ===================================================== */
+
+    const INSTAGRAM_MEDIA = [
+
+      "https://www.instagram.com/reel/Dblz7QgjDK-/?igsh=MWtrN3hmZ2ttY3k4dA==",
+
+      "https://www.instagram.com/p/Db3bHeLjqZm/?igsh=ODlla21sMWdxbzk3",
+
+      "https://www.instagram.com/reel/DZnpT3HkXpE/?igsh=dHZrNml1cnUxeHZz",
+
+      "https://www.instagram.com/reel/DZfdE7wONXV/?igsh=MTF0NDVtZmVrZ2RjaA==",
+
+      "https://www.instagram.com/reel/DZC6keBjjzl/?igsh=aWJkdHo4NmE4czV6",
+
+      "https://www.instagram.com/p/DPkLGrZDrZW/?igsh=MW5lNmxzaGZycWU3eA==",
+
+      "https://www.instagram.com/p/DU80gg8EcR9/?igsh=bHd2MzdvbDlvbjJr"
+
+    ];
+
+
+    /*
+     * POSICIONES ALREDEDOR DEL CAPIBARA
+     *
+     * left = horizontal
+     * top  = vertical
+     */
+
+    const INSTAGRAM_ORBIT_POSITIONS = [
+
+      {
+        left:
+          "15%",
+
+        top:
+          "27%"
+      },
+
+      {
+        left:
+          "36%",
+
+        top:
+          "10%"
+      },
+
+      {
+        left:
+          "65%",
+
+        top:
+          "10%"
+      },
+
+      {
+        left:
+          "87%",
+
+        top:
+          "30%"
+      },
+
+      {
+        left:
+          "88%",
+
+        top:
+          "61%"
+      },
+
+      {
+        left:
+          "68%",
+
+        top:
+          "80%"
+      },
+
+      {
+        left:
+          "17%",
+
+        top:
+          "70%"
+      }
+
+    ];
+
+
+    let config =
+      FALLBACK_CONFIG;
+
+    let voiceEnabled =
+      true;
+
+    let thinking =
+      false;
+
+    let recognition =
+      null;
+
+    let toastTimer;
+
+
+    const $ =
+      id =>
+        document.getElementById(
+          id
+        );
+
+
+    const drawer =
+      $("drawer");
+
+    const backdrop =
+      $("drawerBackdrop");
+
+    const chatPanel =
+      $("chatPanel");
+
+    const chatLauncher =
+      $("chatLauncher");
+
+    const chatMessages =
+      $("chatMessages");
+
+    const suggestions =
+      $("suggestions");
+
+    const chatInput =
+      $("chatInput");
+
+    const capiGif =
+      $("capiGif");
+
+
+    /* =====================================================
+       INICIALIZACIÓN
+       ===================================================== */
+
+    function init(received) {
+
+
+      config =
+        Object.assign(
+          {},
+          FALLBACK_CONFIG,
+          received || {}
+        );
+
+
+      $("subtitleText")
+        .textContent =
+          config.subtitle;
+
+
+      $("descriptionText")
+        .textContent =
+          config.description;
+
+
+      renderModules();
+
+      connectAssets();
+
+
+      renderSuggestions([
+
+        "¿Qué es CAPIMEL?",
+
+        "¿Qué significa MEL?",
+
+        "¿Qué módulos tiene?"
+
+      ]);
+
+
+      setupRecognition();
+
+      startNetwork();
+
+      setupInstagramOrbit();
+
+    }
+
+
+    /* =====================================================
+       LOGO Y CAPI
+       ===================================================== */
+
+    function connectAssets() {
+
+
+      const gifId =
+
+        encodeURIComponent(
+          config.capiGifId
+        );
+
+
+      const logoId =
+
+        encodeURIComponent(
+          config.logoId
+        );
+
+
+      $("centreLogo").src =
+
+        "https://drive.google.com/thumbnail?id=" +
+
+        logoId +
+
+        "&sz=w500";
+
+
+      capiGif.src =
+
+        "https://drive.usercontent.google.com/download?id=" +
+
+        gifId +
+
+        "&export=view&confirm=t";
+
+
+      $("chatAvatar").src =
+        capiGif.src;
+
+
+      if (
+        window.google &&
+        google.script &&
+        google.script.run
+      ) {
+
+
+        google.script.run
+
+          .withSuccessHandler(
+
+            function (data) {
+
+
+              if (
+                !capiGif.complete ||
+                !capiGif.naturalWidth
+              ) {
+
+                capiGif.src =
+                  data;
+
+                $("chatAvatar").src =
+                  data;
+
+              }
+
+            }
+
+          )
+
+          .getCapiGifDataUrl();
+
+      }
+
+    }
+
+
+    capiGif.addEventListener(
+
+      "load",
+
+      function () {
+
+
+        $("assetLoader")
+          .classList
+          .add(
+            "hidden"
+          );
+
+
+        $("connectionText")
+          .textContent =
+            "CAPI conectado";
+
+
+        showCapiBubble(
+
+          "¡Hola! Soy CAPI. Tócame para conversar."
+
+        );
+
+      }
+
+    );
+
+
+    $("centreLogo")
+      .addEventListener(
+
+        "error",
+
+        function () {
+
+
+          if (
+            window.google &&
+            google.script &&
+            google.script.run
+          ) {
+
+
+            google.script.run
+
+              .withSuccessHandler(
+
+                function (data) {
+
+                  $("centreLogo").src =
+                    data;
+
+                }
+
+              )
+
+              .getLogoDataUrl();
+
+          }
+
+        }
+
+      );
+
+
+    /* =====================================================
+       MÓDULOS
+       ===================================================== */
+
+    function renderModules() {
+
+
+      $("moduleList")
+        .innerHTML =
+
+          (
+            config.modules ||
+            []
+          )
+
+            .map(
+
+              function (
+                module
+              ) {
+
+
+                const target =
+
+                  module.url
+
+                    ? "_blank"
+
+                    : "_self";
+
+
+                return `
+
+                  <a
+
+                    class="module-link"
+
+                    href="${safeAttribute(
+                      module.url ||
+                      "#"
+                    )}"
+
+                    target="${target}"
+
+                    rel="noopener"
+
+                    style="--module:${safeAttribute(
+                      module.color ||
+                      "#126bc3"
+                    )}"
+
+                  >
+
+
+                    <span class="module-icon">
+
+
+                      <svg
+
+                        viewBox="0 0 24 24"
+
+                        fill="none"
+
+                        stroke="currentColor"
+
+                        stroke-width="2"
+
+                      >
+
+                        <path
+                          d="M4 5h16v14H4z"
+                        ></path>
+
+                        <path
+                          d="M8 9h8M8 13h5"
+                        ></path>
+
+                      </svg>
+
+
+                    </span>
+
+
+                    <span class="module-copy">
+
+
+                      <b>
+
+                        ${escapeHtml(
+                          module.name ||
+                          "Módulo"
+                        )}
+
+                      </b>
+
+
+                      <small>
+
+                        ${escapeHtml(
+                          module.detail ||
+                          ""
+                        )}
+
+                      </small>
+
+
+                    </span>
+
+
+                    <svg
+
+                      class="module-arrow"
+
+                      viewBox="0 0 24 24"
+
+                      fill="none"
+
+                      stroke="currentColor"
+
+                      stroke-width="2"
+
+                    >
+
+                      <path
+                        d="M5 12h14M13 6l6 6-6 6"
+                      ></path>
+
+                    </svg>
+
+
+                  </a>
+
+                `;
+
+              }
+
+            )
+
+            .join("");
+
+    }
+
+
+    /* =====================================================
+       MENÚ
+       ===================================================== */
+
+    function openMenu() {
+
+
+      drawer
+        .classList
+        .add(
+          "open"
+        );
+
+
+      backdrop
+        .classList
+        .add(
+          "open"
+        );
+
+
+      drawer
+        .setAttribute(
+          "aria-hidden",
+          "false"
+        );
+
+    }
+
+
+    function closeMenu() {
+
+
+      drawer
+        .classList
+        .remove(
+          "open"
+        );
+
+
+      backdrop
+        .classList
+        .remove(
+          "open"
+        );
+
+
+      drawer
+        .setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+    }
+
+
+    $("menuButton")
+      .addEventListener(
+        "click",
+        openMenu
+      );
+
+
+    $("statusExploreButton")
+      .addEventListener(
+        "click",
+        openMenu
+      );
+
+
+    $("enterButton")
+      .addEventListener(
+        "click",
+        openMenu
+      );
+
+
+    $("closeButton")
+      .addEventListener(
+        "click",
+        closeMenu
+      );
+
+
+    backdrop
+      .addEventListener(
+        "click",
+        closeMenu
+      );
+
+
+    /* =====================================================
+       CHAT
+       ===================================================== */
+
+    function openChat() {
+
+
+      chatPanel
+        .classList
+        .add(
+          "open"
+        );
+
+
+      chatPanel
+        .setAttribute(
+          "aria-hidden",
+          "false"
+        );
+
+
+      chatLauncher.hidden =
+        true;
+
+
+      setTimeout(
+
+        function () {
+
+          chatInput.focus();
+
+        },
+
+        220
+
+      );
+
+    }
+
+
+    function closeChat() {
+
+
+      chatPanel
+        .classList
+        .remove(
+          "open"
+        );
+
+
+      chatPanel
+        .setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+
+      chatLauncher.hidden =
+        false;
+
+    }
+
+
+    chatLauncher
+      .addEventListener(
+        "click",
+        openChat
+      );
+
+
+    $("closeChat")
+      .addEventListener(
+        "click",
+        closeChat
+      );
+
+
+    $("meetCapi")
+      .addEventListener(
+        "click",
+        openChat
+      );
+
+
+    /*
+     * Si toca directamente CAPI,
+     * abre el chat.
+     *
+     * Si toca uno de los círculos
+     * multimedia, NO abre el chat.
+     */
+
+    $("capiArea")
+      .addEventListener(
+
+        "click",
+
+        function (event) {
+
+
+          if (
+            event.target.closest(
+              ".capi-media-orbit"
+            )
+          ) {
+
+            return;
+
+          }
+
+
+          openChat();
+
+        }
+
+      );
+
+
+    $("capiArea")
+      .addEventListener(
+
+        "keydown",
+
+        function (event) {
+
+
+          if (
+            event.target !==
+            $("capiArea")
+          ) {
+
+            return;
+
+          }
+
+
+          if (
+            event.key ===
+              "Enter" ||
+
+            event.key ===
+              " "
+          ) {
+
+
+            event.preventDefault();
+
+            openChat();
+
+          }
+
+        }
+
+      );
+
+
+    /* =====================================================
+       BURBUJA CAPI
+       ===================================================== */
+
+    function showCapiBubble(
+      message
+    ) {
+
+
+      $("capiBubble")
+        .textContent =
+          message;
+
+
+      $("capiBubble")
+        .classList
+        .add(
+          "show"
+        );
+
+
+      setTimeout(
+
+        function () {
+
+
+          $("capiBubble")
+            .classList
+            .remove(
+              "show"
+            );
+
+        },
+
+        4200
+
+      );
+
+    }
+
+
+    /* =====================================================
+       ENVIAR PREGUNTA
+       ===================================================== */
+
+    $("chatForm")
+      .addEventListener(
+
+        "submit",
+
+        function (event) {
+
+
+          event.preventDefault();
+
+
+          sendQuestion(
+            chatInput.value
+          );
+
+        }
+
+      );
+
+
+    function sendQuestion(
+      question
+    ) {
+
+
+      const clean =
+
+        String(
+          question ||
+          ""
+        )
+
+          .trim()
+
+          .slice(
+            0,
+            500
+          );
+
+
+      if (
+        !clean ||
+        thinking
+      ) {
+
+        return;
+
+      }
+
+
+      addMessage(
+        clean,
+        "user"
+      );
+
+
+      chatInput.value =
+        "";
+
+
+      thinking =
+        true;
+
+
+      const waiting =
+        addThinking();
+
+
+      if (
+        window.google &&
+        google.script &&
+        google.script.run
+      ) {
+
+
+        google.script.run
+
+          .withSuccessHandler(
+
+            function (
+              response
+            ) {
+
+
+              finishAnswer(
+                response,
+                waiting
+              );
+
+            }
+
+          )
+
+          .withFailureHandler(
+
+            function () {
+
+
+              finishAnswer(
+
+                {
+
+                  answer:
+                    "No pude conectarme. Intenta nuevamente en unos segundos.",
+
+                  suggestions: [
+
+                    "¿Qué es CAPIMEL?",
+
+                    "¿Qué módulos tiene?"
+
+                  ]
+
+                },
+
+                waiting
+
+              );
+
+            }
+
+          )
+
+          .askCapi(
+            clean
+          );
+
+
+      } else {
+
+
+        setTimeout(
+
+          function () {
+
+
+            finishAnswer(
+
+              localAnswer(
+                clean
+              ),
+
+              waiting
+
+            );
+
+          },
+
+          500
+
+        );
+
+      }
+
+    }
+
+
+    function finishAnswer(
+      response,
+      waiting
+    ) {
+
+
+      waiting.remove();
+
+
+      thinking =
+        false;
+
+
+      const answer =
+
+        response &&
+        response.answer
+
+          ? response.answer
+
+          : "Puedo ayudarte con información sobre CAPIMEL.";
+
+
+      addMessage(
+
+        answer,
+
+        "capi",
+
+        response
+
+          ? response.action
+
+          : null
+
+      );
+
+
+      renderSuggestions(
+
+        response &&
+        response.suggestions
+
+          ? response.suggestions
+
+          : []
+
+      );
+
+
+      speak(
+        answer
+      );
+
+    }
+
+
+    function addMessage(
+      text,
+      role,
+      action
+    ) {
+
+
+      const bubble =
+
+        document.createElement(
+          "div"
+        );
+
+
+      bubble.className =
+
+        "chat-message " +
+
+        (
+          role ===
+            "user"
+
+            ? "user"
+
+            : "capi"
+        );
+
+
+      const copy =
+
+        document.createElement(
+          "span"
+        );
+
+
+      copy.textContent =
+        text;
+
+
+      bubble
+        .appendChild(
+          copy
+        );
+
+
+      if (
+        action &&
+        action.url
+      ) {
+
+
+        bubble
+          .appendChild(
+            document.createElement(
+              "br"
+            )
+          );
+
+
+        const link =
+
+          document.createElement(
+            "a"
+          );
+
+
+        link.className =
+          "chat-action";
+
+
+        link.href =
+          action.url;
+
+
+        link.target =
+          "_blank";
+
+
+        link.rel =
+          "noopener";
+
+
+        link.textContent =
+
+          action.label ||
+
+          "Abrir módulo";
+
+
+        bubble
+          .appendChild(
+            link
+          );
+
+      }
+
+
+      chatMessages
+        .appendChild(
+          bubble
+        );
+
+
+      chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+
+
+      return bubble;
+
+    }
+
+
+    function addThinking() {
+
+
+      const bubble =
+
+        document.createElement(
+          "div"
+        );
+
+
+      bubble.className =
+        "chat-message capi thinking";
+
+
+      bubble.innerHTML =
+        "<i></i><i></i><i></i>";
+
+
+      chatMessages
+        .appendChild(
+          bubble
+        );
+
+
+      chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+
+
+      return bubble;
+
+    }
+
+
+    function renderSuggestions(
+      items
+    ) {
+
+
+      suggestions.innerHTML =
+        "";
+
+
+      (
+        items ||
+        []
+      )
+
+        .slice(
+          0,
+          5
+        )
+
+        .forEach(
+
+          function (
+            text
+          ) {
+
+
+            const button =
+
+              document.createElement(
+                "button"
+              );
+
+
+            button.type =
+              "button";
+
+
+            button.className =
+              "suggestion";
+
+
+            button.textContent =
+              text;
+
+
+            button
+              .addEventListener(
+
+                "click",
+
+                function () {
+
+                  sendQuestion(
+                    text
+                  );
+
+                }
+
+              );
+
+
+            suggestions
+              .appendChild(
+                button
+              );
+
+          }
+
+        );
+
+    }
+
+
+    function localAnswer(
+      question
+    ) {
+
+
+      const text =
+        normalize(
+          question
+        );
+
+
+      if (
+        text.includes(
+          "modulo"
+        )
+      ) {
+
+
+        return {
+
+          answer:
+            "CAPIMEL reúne CAPI MasterLab, Radar de Investigación, Pulso del Talento y Centro de Control Financiero.",
+
+          suggestions: [
+
+            "CAPI MasterLab",
+
+            "Radar de Investigación",
+
+            "Pulso del Talento"
+
+          ]
+
+        };
+
+      }
+
+
+      if (
+        text.includes(
+          "mel"
+        )
+      ) {
+
+
+        return {
+
+          answer:
+            "MEL significa monitoreo, evaluación y aprendizaje: seguir avances, analizar resultados y convertir evidencia en mejoras.",
+
+          suggestions: [
+
+            "¿Qué es CAPIMEL?",
+
+            "¿Qué módulos tiene?"
+
+          ]
+
+        };
+
+      }
+
+
+      return {
+
+        answer:
+          "CAPIMEL Bolivia transforma datos, evidencia y aprendizaje en decisiones para fortalecer el Centro NIHR LatAm en Bolivia.",
+
+        suggestions: [
+
+          "¿Qué significa MEL?",
+
+          "¿Qué módulos tiene?"
+
+        ]
+
+      };
+
+    }
+
+
+    /* =====================================================
+       VOZ
+       ===================================================== */
+
+    function speak(
+      text
+    ) {
+
+
+      if (
+        !voiceEnabled ||
+        !(
+          "speechSynthesis"
+          in window
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      speechSynthesis
+        .cancel();
+
+
+      const utterance =
+
+        new SpeechSynthesisUtterance(
+          text
+        );
+
+
+      utterance.lang =
+        "es-BO";
+
+
+      utterance.rate =
+        0.98;
+
+
+      const voice =
+
+        speechSynthesis
+
+          .getVoices()
+
+          .find(
+
+            function (
+              item
+            ) {
+
+
+              return item.lang
+
+                .toLowerCase()
+
+                .startsWith(
+                  "es"
+                );
+
+            }
+
+          );
+
+
+      if (
+        voice
+      ) {
+
+        utterance.voice =
+          voice;
+
+      }
+
+
+      speechSynthesis
+        .speak(
+          utterance
+        );
+
+    }
+
+
+    $("voiceButton")
+      .addEventListener(
+
+        "click",
+
+        function () {
+
+
+          voiceEnabled =
+            !voiceEnabled;
+
+
+          $("voiceButton")
+            .style
+            .opacity =
+
+              voiceEnabled
+
+                ? "1"
+
+                : "0.45";
+
+
+          if (
+            !voiceEnabled &&
+            "speechSynthesis"
+            in window
+          ) {
+
+
+            speechSynthesis
+              .cancel();
+
+          }
+
+
+          if (
+            voiceEnabled
+          ) {
+
+
+            speak(
+              "La voz de CAPI está activada."
+            );
+
+          }
+
+        }
+
+      );
+
+
+    /* =====================================================
+       MICRÓFONO
+       ===================================================== */
+
+    function setupRecognition() {
+
+
+      const Recognition =
+
+        window.SpeechRecognition ||
+
+        window.webkitSpeechRecognition;
+
+
+      if (
+        !Recognition
+      ) {
+
+
+        $("micButton")
+          .style
+          .display =
+            "none";
+
+
+        $("chatForm")
+          .style
+          .gridTemplateColumns =
+            "1fr 42px";
+
+
+        return;
+
+      }
+
+
+      recognition =
+        new Recognition();
+
+
+      recognition.lang =
+        "es-BO";
+
+
+      recognition.interimResults =
+        false;
+
+
+      recognition
+        .addEventListener(
+
+          "start",
+
+          function () {
+
+
+            $("micButton")
+              .classList
+              .add(
+                "listening"
+              );
+
+
+            chatInput.placeholder =
+              "Te escucho…";
+
+          }
+
+        );
+
+
+      recognition
+        .addEventListener(
+
+          "end",
+
+          function () {
+
+
+            $("micButton")
+              .classList
+              .remove(
+                "listening"
+              );
+
+
+            chatInput.placeholder =
+              "Escribe tu pregunta…";
+
+          }
+
+        );
+
+
+      recognition
+        .addEventListener(
+
+          "result",
+
+          function (
+            event
+          ) {
+
+
+            const text =
+
+              event
+                .results[0][0]
+                .transcript;
+
+
+            chatInput.value =
+              text;
+
+
+            sendQuestion(
+              text
+            );
+
+          }
+
+        );
+
+
+      recognition
+        .addEventListener(
+
+          "error",
+
+          function () {
+
+
+            showToast(
+              "Revisa el permiso del micrófono."
+            );
+
+          }
+
+        );
+
+    }
+
+
+    $("micButton")
+      .addEventListener(
+
+        "click",
+
+        function () {
+
+
+          if (
+            !recognition
+          ) {
+
+            return;
+
+          }
+
+
+          try {
+
+
+            recognition
+              .start();
+
+
+          } catch (
+            error
+          ) {
+
+
+            recognition
+              .stop();
+
+          }
+
+        }
+
+      );
+
+
+    /* =====================================================
+       MOVIMIENTO DE CAPI
+       ===================================================== */
+
+    $("capiArea")
+      .addEventListener(
+
+        "pointermove",
+
+        function (
+          event
+        ) {
+
+
+          if (
+            matchMedia(
+              "(hover:none)"
+            ).matches
+          ) {
+
+            return;
+
+          }
+
+
+          const rect =
+
+            $("capiArea")
+              .getBoundingClientRect();
+
+
+          const x =
+
+            (
+              event.clientX -
+              rect.left
+            )
+
+            /
+
+            rect.width;
+
+
+          const y =
+
+            (
+              event.clientY -
+              rect.top
+            )
+
+            /
+
+            rect.height;
+
+
+          $("capiArea")
+            .style
+            .setProperty(
+
+              "--mx",
+
+              (
+                (
+                  x -
+                  0.5
+                )
+
+                *
+
+                16
+              )
+
+              +
+
+              "px"
+
+            );
+
+
+          $("capiArea")
+            .style
+            .setProperty(
+
+              "--my",
+
+              (
+                (
+                  y -
+                  0.5
+                )
+
+                *
+
+                10
+              )
+
+              +
+
+              "px"
+
+            );
+
+        }
+
+      );
+
+
+    $("capiArea")
+      .addEventListener(
+
+        "pointerleave",
+
+        function () {
+
+
+          $("capiArea")
+            .style
+            .setProperty(
+              "--mx",
+              "0px"
+            );
+
+
+          $("capiArea")
+            .style
+            .setProperty(
+              "--my",
+              "0px"
+            );
+
+        }
+
+      );
+
+
+    /* =====================================================
+       ESC
+       ===================================================== */
+
+    document
+      .addEventListener(
+
+        "keydown",
+
+        function (
+          event
+        ) {
+
+
+          if (
+            event.key !==
+            "Escape"
+          ) {
+
+            return;
+
+          }
+
+
+          if (
+            drawer
+              .classList
+              .contains(
+                "open"
+              )
+          ) {
+
+            closeMenu();
+
+          }
+
+
+          if (
+            chatPanel
+              .classList
+              .contains(
+                "open"
+              )
+          ) {
+
+            closeChat();
+
+          }
+
+
+          if (
+            $("capiMediaModalBackdrop") &&
+
+            $("capiMediaModalBackdrop")
+              .classList
+              .contains(
+                "open"
+              )
+          ) {
+
+            closeInstagramPreview();
+
+          }
+
+        }
+
+      );
+
+
+    /* =====================================================
+       TOAST
+       ===================================================== */
+
+    function showToast(
+      message
+    ) {
+
+
+      clearTimeout(
+        toastTimer
+      );
+
+
+      $("toast")
+        .textContent =
+          message;
+
+
+      $("toast")
+        .classList
+        .add(
+          "show"
+        );
+
+
+      toastTimer =
+
+        setTimeout(
+
+          function () {
+
+
+            $("toast")
+              .classList
+              .remove(
+                "show"
+              );
+
+          },
+
+          3300
+
+        );
+
+    }
+
+
+    /* =====================================================
+       UTILIDADES
+       ===================================================== */
+
+    function normalize(
+      value
+    ) {
+
+
+      return String(
+        value ||
+        ""
+      )
+
+        .toLowerCase()
+
+        .normalize(
+          "NFD"
+        )
+
+        .replace(
+          /[\u0300-\u036f]/g,
+          ""
+        );
+
+    }
+
+
+    function escapeHtml(
+      value
+    ) {
+
+
+      return String(
+        value
+      )
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
+
+
+    function safeAttribute(
+      value
+    ) {
+
+
+      return escapeHtml(
+
+        String(
+          value ||
+          ""
+        )
+
+      );
+
+    }
+
+
+    /* =====================================================
+       INSTAGRAM
+       ===================================================== */
+
+
+    /*
+     * Convierte tu URL normal:
+     *
+     * instagram.com/reel/CODIGO/
+     *
+     * en:
+     *
+     * instagram.com/reel/CODIGO/embed/
+     */
+
+    function getInstagramEmbedUrl(
+      url
+    ) {
+
+
+      const match =
+
+        String(
+          url ||
+          ""
+        )
+
+          .match(
+
+            /instagram\.com\/(reel|p)\/([^/?#]+)/i
+
+          );
+
+
+      if (
+        !match
+      ) {
+
+        return "";
+
+      }
+
+
+      return (
+
+        "https://www.instagram.com/" +
+
+        match[1]
+          .toLowerCase() +
+
+        "/" +
+
+        match[2] +
+
+        "/embed/"
+
+      );
+
+    }
+
+
+    function getInstagramKind(
+      url
+    ) {
+
+
+      return
+
+        /instagram\.com\/reel\//i
+          .test(
+            url
+          )
+
+          ? "reel"
+
+          : "post";
+
+    }
+
+
+    /* =====================================================
+       CREAR LOS 7 CÍRCULOS
+       ===================================================== */
+
+    function setupInstagramOrbit() {
+
+
+      const capiArea =
+        $("capiArea");
+
+
+      if (
+        !capiArea ||
+        $("capiMediaLayer")
+      ) {
+
+        return;
+
+      }
+
+
+      const layer =
+
+        document.createElement(
+          "div"
+        );
+
+
+      layer.className =
+        "capi-media-layer";
+
+
+      layer.id =
+        "capiMediaLayer";
+
+
+      layer.setAttribute(
+
+        "aria-label",
+
+        "Galería multimedia de Instagram"
+
+      );
+
+
+      /*
+       * Se inserta justo después
+       * del círculo holográfico.
+       */
+
+      const holo =
+
+        capiArea
+          .querySelector(
+            ".holo-system"
+          );
+
+
+      if (
+        holo &&
+        holo.nextSibling
+      ) {
+
+
+        capiArea
+          .insertBefore(
+            layer,
+            holo.nextSibling
+          );
+
+
+      } else {
+
+
+        capiArea
+          .appendChild(
+            layer
+          );
+
+      }
+
+
+      INSTAGRAM_MEDIA
+        .forEach(
+
+          function (
+            url,
+            index
+          ) {
+
+
+            const embedUrl =
+
+              getInstagramEmbedUrl(
+                url
+              );
+
+
+            const kind =
+
+              getInstagramKind(
+                url
+              );
+
+
+            const position =
+
+              INSTAGRAM_ORBIT_POSITIONS[
+
+                index %
+
+                INSTAGRAM_ORBIT_POSITIONS
+                  .length
+
+              ];
+
+
+            /* =============================
+               CÍRCULO
+               ============================= */
+
+            const orbit =
+
+              document.createElement(
+                "div"
+              );
+
+
+            orbit.className =
+              "capi-media-orbit";
+
+
+            orbit.tabIndex =
+              0;
+
+
+            orbit.setAttribute(
+              "role",
+              "button"
+            );
+
+
+            orbit.setAttribute(
+
+              "aria-label",
+
+              (
+                kind ===
+                  "reel"
+
+                  ? "Ver Reel"
+
+                  : "Ver publicación"
+              )
+
+              +
+
+              " de Instagram "
+
+              +
+
+              (
+                index +
+                1
+              )
+
+            );
+
+
+            orbit
+              .style
+              .setProperty(
+
+                "--orbit-left",
+
+                position.left
+
+              );
+
+
+            orbit
+              .style
+              .setProperty(
+
+                "--orbit-top",
+
+                position.top
+
+              );
+
+
+            orbit
+              .style
+              .setProperty(
+
+                "--orbit-delay",
+
+                (
+                  index *
+                  -0.55
+                )
+
+                +
+
+                "s"
+
+              );
+
+
+            const shell =
+
+              document.createElement(
+                "div"
+              );
+
+
+            shell.className =
+              "capi-media-shell";
+
+
+            const preview =
+
+              document.createElement(
+                "div"
+              );
+
+
+            preview.className =
+              "capi-media-preview";
+
+
+            /* =============================
+               RESPALDO VISUAL
+               ============================= */
+
+            const fallback =
+
+              document.createElement(
+                "div"
+              );
+
+
+            fallback.className =
+              "capi-media-fallback";
+
+
+            fallback.innerHTML =
+
+              '<span class="capi-media-instagram-mark">' +
+
+              '◎' +
+
+              '</span>' +
+
+              '<small>' +
+
+              (
+                kind ===
+                  "reel"
+
+                  ? "REEL"
+
+                  : "POST"
+              )
+
+              +
+
+              '</small>';
+
+
+            /* =============================
+               PREVISUALIZACIÓN REAL
+               ============================= */
+
+            const frame =
+
+              document.createElement(
+                "iframe"
+              );
+
+
+            frame.className =
+              "capi-media-frame";
+
+
+            frame.src =
+              embedUrl;
+
+
+            frame.title =
+
+              (
+                kind ===
+                  "reel"
+
+                  ? "Vista previa de Reel"
+
+                  : "Vista previa de publicación"
+              )
+
+              +
+
+              " "
+
+              +
+
+              (
+                index +
+                1
+              );
+
+
+            frame.loading =
+              "lazy";
+
+
+            frame.tabIndex =
+              -1;
+
+
+            frame.setAttribute(
+
+              "allow",
+
+              "autoplay; encrypted-media; picture-in-picture; clipboard-write; web-share"
+
+            );
+
+
+            frame.setAttribute(
+
+              "referrerpolicy",
+
+              "strict-origin-when-cross-origin"
+
+            );
+
+
+            frame
+              .addEventListener(
+
+                "load",
+
+                function () {
+
+
+                  orbit
+                    .classList
+                    .add(
+                      "is-loaded"
+                    );
+
+                }
+
+              );
+
+
+            /* =============================
+               ICONITO REEL / FOTO
+               ============================= */
+
+            const badge =
+
+              document.createElement(
+                "span"
+              );
+
+
+            badge.className =
+              "capi-media-badge";
+
+
+            badge.setAttribute(
+
+              "aria-hidden",
+
+              "true"
+
+            );
+
+
+            badge.textContent =
+
+              kind ===
+                "reel"
+
+                ? "▶"
+
+                : "▦";
+
+
+            /* =============================
+               ARMAR CÍRCULO
+               ============================= */
+
+            preview
+              .appendChild(
+                fallback
+              );
+
+
+            preview
+              .appendChild(
+                frame
+              );
+
+
+            shell
+              .appendChild(
+                preview
+              );
+
+
+            shell
+              .appendChild(
+                badge
+              );
+
+
+            orbit
+              .appendChild(
+                shell
+              );
+
+
+            layer
+              .appendChild(
+                orbit
+              );
+
+
+            /* =============================
+               CLIC
+               ============================= */
+
+            orbit
+              .addEventListener(
+
+                "click",
+
+                function (
+                  event
+                ) {
+
+
+                  event
+                    .preventDefault();
+
+
+                  event
+                    .stopPropagation();
+
+
+                  openInstagramPreview(
+
+                    url,
+
+                    embedUrl,
+
+                    kind,
+
+                    index
+
+                  );
+
+                }
+
+              );
+
+
+            orbit
+              .addEventListener(
+
+                "keydown",
+
+                function (
+                  event
+                ) {
+
+
+                  if (
+                    event.key ===
+                      "Enter" ||
+
+                    event.key ===
+                      " "
+                  ) {
+
+
+                    event
+                      .preventDefault();
+
+
+                    event
+                      .stopPropagation();
+
+
+                    openInstagramPreview(
+
+                      url,
+
+                      embedUrl,
+
+                      kind,
+
+                      index
+
+                    );
+
+                  }
+
+                }
+
+              );
+
+          }
+
+        );
+
+
+      createInstagramModal();
+
+    }
+
+
+    /* =====================================================
+       CREAR MODAL
+       ===================================================== */
+
+    function createInstagramModal() {
+
+
+      if (
+        $("capiMediaModalBackdrop")
+      ) {
+
+        return;
+
+      }
+
+
+      const modal =
+
+        document.createElement(
+          "div"
+        );
+
+
+      modal.className =
+        "capi-media-modal-backdrop";
+
+
+      modal.id =
+        "capiMediaModalBackdrop";
+
+
+      modal.setAttribute(
+
+        "aria-hidden",
+
+        "true"
+
+      );
+
+
+      modal.innerHTML = `
+
+
+        <div
+
+          class="capi-media-modal"
+
+          role="dialog"
+
+          aria-modal="true"
+
+          aria-labelledby="capiMediaModalTitle"
+
+        >
+
+
+          <div
+            class="capi-media-modal-head"
+          >
+
+
+            <div>
+
+
+              <span
+                class="capi-media-kicker"
+              >
+
+                CAPIMEL · MULTIMEDIA
+
+              </span>
+
+
+              <h3
+                id="capiMediaModalTitle"
+              >
+
+                Contenido de Instagram
+
+              </h3>
+
+
+            </div>
+
+
+            <button
+
+              class="capi-media-close"
+
+              id="capiMediaClose"
+
+              type="button"
+
+              aria-label="Cerrar vista previa"
+
+            >
+
+              ×
+
+            </button>
+
+
+          </div>
+
+
+          <div
+            class="capi-media-modal-body"
+          >
+
+
+            <iframe
+
+              id="capiMediaModalFrame"
+
+              title="Contenido de Instagram"
+
+              loading="lazy"
+
+              allow="autoplay; encrypted-media; picture-in-picture; clipboard-write; web-share"
+
+              referrerpolicy="strict-origin-when-cross-origin"
+
+            ></iframe>
+
+
+          </div>
+
+
+          <div
+            class="capi-media-modal-foot"
+          >
+
+
+            <span
+              id="capiMediaCounter"
+            >
+
+              Contenido 1 de 7
+
+            </span>
+
+
+            <a
+
+              id="capiMediaOpenInstagram"
+
+              href="#"
+
+              target="_blank"
+
+              rel="noopener noreferrer"
+
+            >
+
+              Abrir en Instagram ↗
+
+            </a>
+
+
+          </div>
+
+
+        </div>
+
+
+      `;
+
+
+      document.body
+        .appendChild(
+          modal
+        );
+
+
+      /*
+       * Clic fuera de la ventana.
+       */
+
+      modal
+        .addEventListener(
+
+          "click",
+
+          function (
+            event
+          ) {
+
+
+            if (
+              event.target ===
+              modal
+            ) {
+
+
+              closeInstagramPreview();
+
+            }
+
+          }
+
+        );
+
+
+      $("capiMediaClose")
+        .addEventListener(
+
+          "click",
+
+          closeInstagramPreview
+
+        );
+
+    }
+
+
+    /* =====================================================
+       ABRIR PREVISUALIZACIÓN
+       ===================================================== */
+
+    function openInstagramPreview(
+      originalUrl,
+      embedUrl,
+      kind,
+      index
+    ) {
+
+
+      const modal =
+        $("capiMediaModalBackdrop");
+
+
+      const frame =
+        $("capiMediaModalFrame");
+
+
+      if (
+        !modal ||
+        !frame
+      ) {
+
+        return;
+
+      }
+
+
+      frame.src =
+        embedUrl;
+
+
+      $("capiMediaModalTitle")
+        .textContent =
+
+          kind ===
+            "reel"
+
+            ? "Reel de Instagram"
+
+            : "Publicación de Instagram";
+
+
+      $("capiMediaCounter")
+        .textContent =
+
+          "Contenido "
+
+          +
+
+          (
+            index +
+            1
+          )
+
+          +
+
+          " de "
+
+          +
+
+          INSTAGRAM_MEDIA.length;
+
+
+      $("capiMediaOpenInstagram")
+        .href =
+          originalUrl;
+
+
+      modal
+        .classList
+        .add(
+          "open"
+        );
+
+
+      modal
+        .setAttribute(
+
+          "aria-hidden",
+
+          "false"
+
+        );
+
+
+      document
+        .documentElement
+        .classList
+        .add(
+          "capi-media-open"
+        );
+
+
+      setTimeout(
+
+        function () {
+
+
+          $("capiMediaClose")
+            .focus();
+
+        },
+
+        80
+
+      );
+
+    }
+
+
+    /* =====================================================
+       CERRAR PREVISUALIZACIÓN
+       ===================================================== */
+
+    function closeInstagramPreview() {
+
+
+      const modal =
+        $("capiMediaModalBackdrop");
+
+
+      const frame =
+        $("capiMediaModalFrame");
+
+
+      if (
+        !modal ||
+        !frame
+      ) {
+
+        return;
+
+      }
+
+
+      modal
+        .classList
+        .remove(
+          "open"
+        );
+
+
+      modal
+        .setAttribute(
+
+          "aria-hidden",
+
+          "true"
+
+        );
+
+
+      /*
+       * Vaciar iframe detiene el video.
+       */
+
+      frame.src =
+        "";
+
+
+      document
+        .documentElement
+        .classList
+        .remove(
+          "capi-media-open"
+        );
+
+    }
+
+
+    /* =====================================================
+       PARTÍCULAS DEL FONDO
+       ===================================================== */
+
+    function startNetwork() {
+
+
+      const canvas =
+        $("networkCanvas");
+
+
+      const context =
+        canvas
+          .getContext(
+            "2d"
+          );
+
+
+      let width =
+        0;
+
+
+      let height =
+        0;
+
+
+      let points =
+        [];
+
+
+      function resize() {
+
+
+        const dpr =
+
+          Math.min(
+
+            window.devicePixelRatio ||
+            1,
+
+            2
+
+          );
+
+
+        width =
+          innerWidth;
+
+
+        height =
+          innerHeight;
+
+
+        canvas.width =
+
+          Math.round(
+            width *
+            dpr
+          );
+
+
+        canvas.height =
+
+          Math.round(
+            height *
+            dpr
+          );
+
+
+        canvas.style.width =
+          width +
+          "px";
+
+
+        canvas.style.height =
+          height +
+          "px";
+
+
+        context
+          .setTransform(
+
+            dpr,
+            0,
+            0,
+            dpr,
+            0,
+            0
+
+          );
+
+
+        const count =
+
+          Math.max(
+
+            22,
+
+            Math.min(
+
+              55,
+
+              Math.floor(
+                width /
+                32
+              )
+
+            )
+
+          );
+
+
+        points =
+
+          Array.from(
+
+            {
+              length:
+                count
+            },
+
+            function () {
+
+
+              return {
+
+                x:
+                  Math.random() *
+                  width *
+                  0.58,
+
+                y:
+                  Math.random() *
+                  height,
+
+                vx:
+                  (
+                    Math.random() -
+                    0.5
+                  )
+                  *
+                  0.12,
+
+                vy:
+                  (
+                    Math.random() -
+                    0.5
+                  )
+                  *
+                  0.12,
+
+                r:
+                  Math.random() *
+                  1.5
+                  +
+                  0.5
+
+              };
+
+            }
+
+          );
+
+      }
+
+
+      function draw() {
+
+
+        context
+          .clearRect(
+
+            0,
+            0,
+            width,
+            height
+
+          );
+
+
+        points
+          .forEach(
+
+            function (
+              point
+            ) {
+
+
+              point.x +=
+                point.vx;
+
+
+              point.y +=
+                point.vy;
+
+
+              if (
+                point.x <
+                  0 ||
+
+                point.x >
+                  width *
+                  0.62
+              ) {
+
+
+                point.vx *=
+                  -1;
+
+              }
+
+
+              if (
+                point.y <
+                  0 ||
+
+                point.y >
+                  height
+              ) {
+
+
+                point.vy *=
+                  -1;
+
+              }
+
+
+              context
+                .beginPath();
+
+
+              context.fillStyle =
+                "rgba(38,173,203,0.22)";
+
+
+              context
+                .arc(
+
+                  point.x,
+
+                  point.y,
+
+                  point.r,
+
+                  0,
+
+                  Math.PI *
+                  2
+
+                );
+
+
+              context
+                .fill();
+
+            }
+
+          );
+
+
+        points
+          .forEach(
+
+            function (
+              point,
+              index
+            ) {
+
+
+              for (
+                let secondIndex =
+                  index +
+                  1;
+
+                secondIndex <
+                points.length;
+
+                secondIndex++
+              ) {
+
+
+                const other =
+                  points[
+                    secondIndex
+                  ];
+
+
+                const distance =
+
+                  Math.hypot(
+
+                    point.x -
+                    other.x,
+
+                    point.y -
+                    other.y
+
+                  );
+
+
+                if (
+                  distance <
+                  135
+                ) {
+
+
+                  context
+                    .beginPath();
+
+
+                  context.strokeStyle =
+
+                    "rgba(25,139,180,"
+
+                    +
+
+                    (
+                      (
+                        1 -
+                        distance /
+                        135
+                      )
+
+                      *
+
+                      0.075
+                    )
+
+                    +
+
+                    ")";
+
+
+                  context.lineWidth =
+                    0.65;
+
+
+                  context
+                    .moveTo(
+
+                      point.x,
+
+                      point.y
+
+                    );
+
+
+                  context
+                    .lineTo(
+
+                      other.x,
+
+                      other.y
+
+                    );
+
+
+                  context
+                    .stroke();
+
+                }
+
+              }
+
+            }
+
+          );
+
+
+        requestAnimationFrame(
+          draw
+        );
+
+      }
+
+
+      resize();
+
+      draw();
+
+
+      addEventListener(
+
+        "resize",
+
+        resize
+
+      );
+
+    }
+
+
+    /* =====================================================
+       INICIAR CAPIMEL
+       ===================================================== */
+
+    if (
+      window.google &&
+      google.script &&
+      google.script.run
+    ) {
+
+
+      google.script.run
+
+        .withSuccessHandler(
+          init
+        )
+
+        .withFailureHandler(
+
+          function () {
+
+            init(
+              FALLBACK_CONFIG
+            );
+
+          }
+
+        )
+
+        .getAppConfig();
+
+
+    } else {
+
+
+      init(
+        FALLBACK_CONFIG
+      );
+
+    }
+
+
+  </script>
+
+</body>
+</html>
