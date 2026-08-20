@@ -4922,7 +4922,25 @@
 
 
     /* =====================================================
-       CONFIGURACIÓN DE RESPALDO
+       CONFIGURACIÓN DE RESPALDO                    [EDITAR]
+       =====================================================
+
+       ⚠️  DUPLICADO INTENCIONAL — LEE ESTO ANTES DE ADAPTAR
+
+       Esta es una copia de seguridad de `Configuracion.gs`. La portada
+       la usa únicamente si la llamada a getAppConfig() falla (por
+       ejemplo, sin conexión o si el usuario no tiene permisos), de modo
+       que la página nunca aparezca vacía.
+
+       Al adaptar la plataforma a tu centro debes editar los MISMOS
+       valores en DOS sitios:
+
+         1. Configuracion.gs   → fuente de verdad (servidor)
+         2. este bloque        → respaldo visual (cliente)
+
+       Si sólo cambias uno, verás la identidad antigua cuando el
+       servidor no responda. Consulta la sección «Adaptar la plataforma»
+       del README.
        ===================================================== */
 
     const FALLBACK_CONFIG = {
@@ -5030,7 +5048,21 @@
 
 
     /* =====================================================
-       TUS 7 CONTENIDOS DE INSTAGRAM
+       CONTENIDOS DE INSTAGRAM                      [EDITAR]
+       =====================================================
+
+       Publicaciones y reels que orbitan alrededor del capibara en la
+       portada. Sustituye estas URL por las de tu propio centro.
+
+       · Acepta enlaces de tipo /p/ (publicaciones) y /reel/ (reels).
+       · Los parámetros ?igsh=... son opcionales; puedes eliminarlos.
+       · Las cuentas deben ser PÚBLICAS: el contenido privado no se
+         puede incrustar y mostrará el respaldo visual.
+       · Si cambias la CANTIDAD de elementos, ajusta también el array
+         de posiciones que viene justo debajo — debe tener exactamente
+         el mismo número de entradas.
+       · Para desactivar esta sección por completo, deja la lista vacía:
+         const INSTAGRAM_MEDIA = [];
        ===================================================== */
 
     const INSTAGRAM_MEDIA = [

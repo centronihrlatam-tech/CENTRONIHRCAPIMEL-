@@ -1,0 +1,8 @@
+# Normaliza los finales de linea para que el proyecto sea identico
+# en Windows, macOS y Linux.
+* text=auto eol=lf
+
+*.gs   text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.md   text eol=lf

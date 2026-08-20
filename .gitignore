@@ -1,0 +1,40 @@
+# ── clasp ─────────────────────────────────────────────────────────────
+# Contiene el scriptId de TU proyecto. Nunca se versiona:
+# cada persona que clone el repo genera el suyo a partir de
+# .clasp.json.example
+.clasp.json
+.clasprc.json
+
+# ── Credenciales y secretos ───────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+client_secret*.json
+service-account*.json
+token.json
+
+# ── Dependencias ──────────────────────────────────────────────────────
+node_modules/
+package-lock.json
+yarn.lock
+
+# ── Sistema operativo ─────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Editores ──────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*~
+
+# ── Temporales y respaldos ────────────────────────────────────────────
+*.log
+*.bak
+*.tmp

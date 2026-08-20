@@ -1,64 +1,19 @@
-/** CAPIMEL Bolivia — portada tecnológica blanca + agente CAPI. */
+/**
+ * CAPIMEL — Lógica de la aplicación.
+ *
+ * ⚠️  NO necesitas editar este archivo para adaptar la plataforma a tu centro.
+ *     Toda la personalización vive en `Configuracion.gs`.
+ *
+ * Este archivo contiene:
+ *   · doGet()            → sirve la portada como aplicación web
+ *   · getAppConfig()     → entrega la configuración al frontend (Index.html)
+ *   · askCapi()          → agente conversacional CAPI (base de conocimiento local)
+ *   · fileToDataUrl_()   → convierte imágenes de Drive en Data URL
+ *
+ * Convención de Apps Script: las funciones que terminan en `_` son privadas
+ * y NO pueden invocarse desde el cliente con google.script.run.
+ */
 
-const CAPIMEL_CONFIG = Object.freeze({
-  appName: 'CAPIMEL Bolivia',
-  country: 'Bolivia',
-
-  subtitle:
-    'Centro de Análisis del Progreso Institucional para el Monitoreo, la Evaluación y el Aprendizaje',
-
-  description:
-    'Un espacio inteligente para transformar datos, evidencia y aprendizaje en decisiones que fortalecen el trabajo del Centro NIHR LatAm en Bolivia.',
-
-  // GIF animado de CAPI.
-  capiGifId:
-    '1ZqicVVTYs3MGaYsyM-cLYdCAwMcrii6a',
-
-  // Ícono institucional.
-  logoId:
-    '1bTN-ax6IQEEnvykQCXOCoED6NqzzHsON',
-
-  dashboardUrl: '',
-
-  modules: [
-    {
-      name: 'CAPI MasterLab',
-      detail: 'Monitoreo estratégico',
-      description:
-        'Espacio de masterclasses, formación y fortalecimiento de capacidades del equipo.',
-      url:
-        'https://script.google.com/a/macros/unifranz.edu.bo/s/AKfycbyy55HnkY5L0c3IC0C8RYw0RIKx4c2T-T6I8xbC35uGqTltsa9_L99jSPMnDl1BwVHE/exec',
-      color: '#08b8ca'
-    },
-    {
-      name: 'Radar de Investigación',
-      detail: 'Avances y resultados',
-      description:
-        'Permite visualizar iniciativas, avances, productos y resultados relacionados con investigación.',
-      url:
-        'https://script.google.com/macros/s/AKfycby1g1ipo6zbS3B8bb2tnlbsxYFOdVn43xpXV_OCla_fXrk85mSBot2gw4zIrn8OwPc-XQ/exec',
-      color: '#1774d1'
-    },
-    {
-      name: 'Pulso del Talento',
-      detail: 'Conocimiento aplicado',
-      description:
-        'Apoya el seguimiento del talento, el desempeño y el aprendizaje institucional del equipo.',
-      url:
-        'https://script.google.com/a/macros/unifranz.edu.bo/s/AKfycbw_X_3Pdrq8cgcn31HAP9nto3_SLta45Kq3qjxdJ0fFwfcHzmb47b6t90TVx_c8BsnXlw/exec',
-      color: '#7559d9'
-    },
-    {
-      name: 'Centro de Control Financiero',
-      detail: 'Información consolidada',
-      description:
-        'Organiza la consulta y el seguimiento de la información presupuestaria y financiera autorizada.',
-      url:
-        'https://script.google.com/a/macros/unifranz.edu.bo/s/AKfycbxlfkasQgdPzsWEbInfxUUM_ethxXQxN1yuOwSq7EbLzZ3-EMpkXS2crB6h17FaT6bcdA/exec',
-      color: '#17a979'
-    }
-  ]
-});
 
 /**
  * Muestra la portada como aplicación web.
