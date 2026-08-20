@@ -1,0 +1,9 @@
+# Copie a config/roster.csv (git-ignored) y complete con datos reales.
+# alias      : identificador estable, sin datos personales. Se usa en logs.
+# nombre     : nombre para mostrar dentro del documento generado.
+# sheet_id   : ID de la hoja de planificacion (solo el ID, no la URL completa).
+# folder_id  : ID de la carpeta de Drive donde se deposita el informe.
+# active     : true/false, permite desactivar sin borrar la fila.
+alias,nombre,sheet_id,folder_id,active
+P001,Nombre Apellido,SHEET_ID_AQUI,FOLDER_ID_AQUI,true
+P002,Otro Nombre,SHEET_ID_AQUI,FOLDER_ID_AQUI,false

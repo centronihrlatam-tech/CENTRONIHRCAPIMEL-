@@ -1,0 +1,46 @@
+# Instalacion:  pip install pre-commit && pre-commit install
+# Estas comprobaciones se ejecutan antes de cada commit sobre TODO el monorepo
+# y son la ultima barrera antes de que un dato salga del equipo.
+# pre-commit solo lee la configuracion en la raiz del repositorio: por eso este
+# archivo vive aqui y no dentro de cada aplicacion.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=512"]
+        # Index.html de CAPIMEL supera el limite y ya esta versionado.
+        exclude: ^apps/capimel/Index\.html$
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  # Elimina las salidas de todo notebook antes del commit.
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+
+  # Escaneo de secretos sobre el diff completo.
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+        files: ^apps/mel-report-automator/
+
+  # Comprobacion propia: ningun notebook debe contener IDs ni salidas.
+  - repo: local
+    hooks:
+      - id: sanitize-notebooks
+        name: notebooks sin datos ni identificadores
+        entry: python apps/mel-report-automator/scripts/sanitize_notebook.py
+        args: ["--check"]
+        language: system
+        files: \.ipynb$

@@ -1,0 +1,151 @@
+# ===========================================================================
+#  mel-report-automator -- configuracion del centro
+# ---------------------------------------------------------------------------
+#  Copie este archivo a  config/center.yaml  y ajustelo. El archivo real esta
+#  en .gitignore: NO se versiona, de modo que ningun identificador propio del
+#  centro (IDs de Drive, nombres de personas, dominios) llega al repositorio.
+#
+#  Ningun secreto vive aqui. Las claves y los IDs sensibles se leen de
+#  variables de entorno, declaradas por *nombre* en los campos `*_env`.
+# ===========================================================================
+
+center:
+  # Nombre visible del centro. Aparece en el nombre del documento generado.
+  name: "<NOMBRE DEL CENTRO>"
+  # Codigo corto usado en nombres de archivo (sin espacios).
+  code: "<CODIGO>"
+  timezone: "America/La_Paz"
+  locale: "es"
+
+period:
+  # El informe cubre desde el dia `cutoff_day` del mes anterior hasta el
+  # dia `cutoff_day` del mes actual. Cambie a 1 para meses calendario.
+  cutoff_day: 25
+  # Si es true, el nombre del mes del informe es el del mes anterior.
+  label_previous_month: true
+
+roster:
+  # Fuente de la lista de personas. Elija UNA:
+  #   csv   -> archivo local (config/roster.csv), git-ignored
+  #   sheet -> hoja de calculo (id en la variable de entorno ROSTER_SHEET_ID)
+  source: "csv"
+  csv_path: "config/roster.csv"
+  sheet_id_env: "ROSTER_SHEET_ID"
+  # Solo se procesan las filas con active = true.
+  worksheet_index: 0
+
+schema:
+  # Mapeo tolerante: nombre canonico -> alias aceptados en la hoja origen.
+  # Los nombres se normalizan (minusculas, sin acentos, guion bajo) antes de
+  # comparar, asi que "Descripción" y "descripcion" coinciden solos.
+  columns:
+    tipo:            ["tipo", "type", "categoria"]
+    componente:      ["compo", "componente", "component", "area"]
+    subcomponente:   ["sub_comp", "subcomponente", "subcomponent"]
+    descripcion:     ["descripcion", "description", "actividad", "activity"]
+    fecha:           ["fecha", "date"]
+    enlace:          ["respaldo_link", "respaldo", "evidence", "link", "url"]
+    comentario:      ["comentario", "comment", "observacion", "notes"]
+    estado:          ["estado", "status"]
+  required: ["descripcion", "fecha"]
+  # true = formato dia/mes/anio en la hoja origen.
+  date_dayfirst: true
+
+taxonomy:
+  activity_types:
+    task: "Tarea"
+    meeting: "Reunion"
+  # Codigo de componente -> marcador en la plantilla de Google Docs.
+  components:
+    "<COD1>": "{{Tabla1}}"
+    "<COD2>": "{{Tabla2}}"
+  # Filas cuya descripcion coincida con alguno de estos patrones (regex,
+  # sin distinguir mayusculas) se excluyen de las tablas del informe.
+  exclude_description_patterns:
+    - "SCRUM"
+  # Particion opcional de reuniones en dos tablas segun un patron.
+  meeting_split:
+    enabled: false
+    pattern: ""
+    marker_match: "{{Tabla7}}"
+    marker_rest: "{{Tabla8}}"
+
+template:
+  # Nombre de la variable de entorno que contiene el ID del documento
+  # plantilla. El ID NUNCA se escribe en este archivo.
+  document_id_env: "REPORT_TEMPLATE_ID"
+  output_name_pattern: "Informe.{mes_abrev}.{aa} {center_code}_{persona}"
+  markers:
+    nombre:       "{{NOMBRE}}"
+    fecha:        "{{FECHA}}"
+    mes:          "{{mesN}}"
+    mes_anterior: "{{mesN-1}}"
+    resumen:      "{{Resumen}}"
+    conclusiones: "{{Conclusiones}}"
+    sugerencias:  "{{Sugerencias}}"
+    anexo:        "{{Anexo}}"
+  table_headers: ["Actividad", "Fecha", "Respaldo"]
+
+evidence:
+  # COMO se incorporan los respaldos de Drive al informe:
+  #   link  -> se inserta el titulo y un hipervinculo. No cambia permisos.  [SEGURO]
+  #   embed -> se incrusta la imagen. La API de Docs exige que el archivo
+  #            sea legible sin sesion, asi que requiere ampliar permisos.
+  mode: "link"
+  # Solo se consulta cuando mode = embed.
+  #   none    -> no se toca ningun permiso; los archivos no legibles se
+  #              degradan a enlace.
+  #   domain  -> lectura para todo el dominio Workspace indicado abajo.
+  #   anyone  -> lectura publica en internet. DESACTIVADO salvo que ademas
+  #              se ponga allow_public_links: true.
+  share_mode: "none"
+  workspace_domain: ""
+  allow_public_links: false
+  # Los permisos ampliados por esta herramienta se revierten al terminar.
+  revoke_after_run: true
+  max_items: 50
+  image_height_pt: 200
+  image_width_pt: 200
+
+llm:
+  # false = el informe se genera con resumenes deterministas, sin enviar
+  # ningun dato fuera de la institucion. Empiece asi si aun no tiene un
+  # acuerdo de tratamiento de datos con el proveedor.
+  enabled: false
+  provider: "openai"
+  model: "gpt-4o-mini"
+  api_key_env: "OPENAI_API_KEY"
+  temperature: 0
+  max_input_chars: 12000
+  max_retries: 4
+  timeout_seconds: 60
+  # Correccion ortografica fila por fila. Multiplica el numero de llamadas
+  # y el volumen de datos enviados: desactivelo si no lo necesita.
+  clean_text_rows: false
+
+privacy:
+  # Se aplica a TODO texto antes de salir de la institucion.
+  redact:
+    urls: true
+    emails: true
+    phones: true
+    ids: true            # cadenas tipo ID de Drive / UUID
+    roster_names: true   # nombres del roster que aparezcan en el texto libre
+  # El nombre de la persona se sustituye por un alias estable en los prompts
+  # y se restituye en el documento final.
+  pseudonymize_subject: true
+  # Corta la ejecucion si el texto redactado aun contiene un patron de riesgo.
+  fail_closed_on_leak: true
+
+audit:
+  log_path: "logs/run.jsonl"
+  # false = el log registra hashes y contadores, nunca nombres ni contenido.
+  log_pii: false
+
+run:
+  # true = no escribe nada en Drive; imprime lo que haria.
+  dry_run: true
+  # Evita duplicados: si ya existe un documento con el mismo nombre en la
+  # carpeta destino, se omite (a menos que se pase --overwrite).
+  skip_if_exists: true
+  max_workers: 1

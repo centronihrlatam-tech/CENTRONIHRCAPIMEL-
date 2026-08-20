@@ -1,0 +1,12 @@
+# Fijado por rango menor para que una actualizacion mayor no rompa la
+# ejecucion sin aviso. Regenere con pip-compile si necesita bloqueo exacto.
+pandas>=2.0,<3.0
+PyYAML>=6.0,<7.0
+gspread>=6.0,<7.0
+google-api-python-client>=2.100,<3.0
+google-auth>=2.30,<3.0
+google-auth-httplib2>=0.2,<1.0
+google-auth-oauthlib>=1.2,<2.0
+
+# Solo necesario cuando llm.enabled = true
+openai>=1.40,<2.0

@@ -16,6 +16,7 @@ separado. Comparten repositorio, licencia y criterios de seguridad.
 |---|---|---|
 | **[CAPIMEL](apps/capimel)** | Portada institucional MEL: tarjetas de acceso a los tableros del centro, agente conversacional CAPI y galería social. | [`apps/capimel/README.md`](apps/capimel/README.md) |
 | **[Registro de personal](apps/registro-personal)** | Alta de personal de investigación por formulario web (validación, generación de identificador, estructura de carpetas en Drive) y consolidación automática de las planillas de trabajo. | [`apps/registro-personal/README.md`](apps/registro-personal/README.md) |
+| **[Automatizador de informes MEL](apps/mel-report-automator)** | Genera un informe periódico por persona a partir de su hoja de planificación y una plantilla de Google Docs. Python, con redacción de datos y resumen opcional por LLM. | [`apps/mel-report-automator/README.md`](apps/mel-report-automator/README.md) |
 
 ```
 .
@@ -28,18 +29,29 @@ separado. Comparten repositorio, licencia y criterios de seguridad.
     │   ├── Codigo.gs
     │   ├── Index.html
     │   └── appsscript.json
-    └── registro-personal/      Registro de personal y consolidador
-        ├── src/                Proyecto de Apps Script
-        ├── docs/               Guías y contrato de datos
-        ├── templates/          Plantillas CSV de cada hoja
-        ├── examples/           Plantillas de configuración
-        └── legacy/             Primera versión del formulario
+    ├── registro-personal/      Registro de personal y consolidador
+    │   ├── src/                Proyecto de Apps Script
+    │   ├── docs/               Guías y contrato de datos
+    │   ├── templates/          Plantillas CSV de cada hoja
+    │   ├── examples/           Plantillas de configuración
+    │   └── legacy/             Primera versión del formulario
+    └── mel-report-automator/   Automatizador de informes MEL (Python)
+        ├── src/mel_reports/    Paquete: fuentes, transformación, escritura, LLM
+        ├── scripts/            Ejecución por lotes y saneado de notebooks
+        ├── config/             *.example.* versionados; el resto, ignorado
+        ├── notebooks/          Cuaderno de ejecución (sin salidas)
+        ├── docs/               Adaptación, gobernanza de datos, seguridad
+        └── tests/              22 pruebas
 ```
 
 ## Empezar
 
 Cada aplicación tiene sus propios requisitos e instrucciones; entra en su carpeta
-y sigue su README. En ambos casos el flujo es el mismo:
+y sigue su README.
+
+`mel-report-automator` es un paquete de Python: se instala con
+`pip install -r apps/mel-report-automator/requirements.txt` y se ejecuta desde su
+carpeta. Las dos aplicaciones de Apps Script siguen este flujo:
 
 1. Crear un proyecto en [script.google.com](https://script.google.com).
 2. Subir el contenido de la carpeta de la aplicación, a mano o con
@@ -68,8 +80,18 @@ Estas reglas aplican a todas las aplicaciones:
 - Si un secreto se publica, **rotar el recurso** además de reescribir el
   historial: un ID filtrado no se "des-filtra" borrando el commit.
 
-Detalle del tratamiento de datos personales de la aplicación de registro:
-[`apps/registro-personal/SECURITY.md`](apps/registro-personal/SECURITY.md).
+Hay una red de seguridad automática en `.pre-commit-config.yaml`: detección de
+claves privadas, escaneo de secretos con *gitleaks*, borrado de las salidas de
+los notebooks y una comprobación propia de que ningún `.ipynb` lleva
+identificadores. Instálala una vez con:
+
+```bash
+pip install pre-commit && pre-commit install
+```
+
+Detalle por aplicación:
+[`apps/registro-personal/SECURITY.md`](apps/registro-personal/SECURITY.md) y
+[`apps/mel-report-automator/docs/DATA_GOVERNANCE.md`](apps/mel-report-automator/docs/DATA_GOVERNANCE.md).
 
 ## Licencia
 

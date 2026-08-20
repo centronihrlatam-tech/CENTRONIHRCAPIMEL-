@@ -45,7 +45,12 @@ desktop.ini
 local/
 *.local.gs
 *.local.json
-secrets*
+# Ojo: patron acotado a propósito. 'secrets*' tambien ocultaria un modulo
+# legitimo llamado secrets.py, que es codigo y debe versionarse.
+secrets.json
+secrets.yaml
+secrets.yml
+.secrets/
 credentials*.json
 
 # -- Exportaciones y respaldos de datos reales ------------------------

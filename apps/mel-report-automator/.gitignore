@@ -1,0 +1,58 @@
+# ---------------------------------------------------------------
+# Secrets and credentials -- NEVER commit
+# ---------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*service_account*.json
+*credentials*.json
+*client_secret*.json
+token.json
+.secrets/
+
+# ---------------------------------------------------------------
+# Institution-specific configuration and personal data
+# Only the *.example.* files are tracked.
+# ---------------------------------------------------------------
+config/*.yaml
+config/*.yml
+config/*.csv
+!config/*.example.yaml
+!config/*.example.csv
+
+data/
+exports/
+logs/
+*.log
+*.jsonl
+
+# ---------------------------------------------------------------
+# Notebooks: outputs are stripped by pre-commit, but keep checkpoints out
+# ---------------------------------------------------------------
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# ---------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# ---------------------------------------------------------------
+# OS / editor
+# ---------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
