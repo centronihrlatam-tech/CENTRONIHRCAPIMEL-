@@ -1,0 +1,3 @@
+Fecha y Hora,Tipo Ejecución,Estado,Archivos Éxito,Archivos Error,Filas Consolidadas,Duración (s),Detalles / Errores
+20/08/2026 08:00:03,TRIGGER_AUTOMATICO,OK,2,0,14,6.4,
+20/08/2026 13:00:05,TRIGGER_AUTOMATICO,CON_ERRORES,1,1,7,5.1,Persona #2: no se pudo abrir el spreadsheet (permisos)

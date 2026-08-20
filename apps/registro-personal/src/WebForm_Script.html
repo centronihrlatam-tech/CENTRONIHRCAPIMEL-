@@ -1,0 +1,312 @@
+<script>
+(function () {
+  'use strict';
+
+  var formEl      = document.getElementById('formAlta');
+  var btnEl       = document.getElementById('btnEnviar');
+  var msjEl       = document.getElementById('mensaje');
+  var cargoSel    = document.getElementById('cargo');
+  var cargoOtro   = document.getElementById('cargo_otro');
+  var grupoCargoOtro = document.getElementById('grupo_cargo_otro');
+  var paisSel     = document.getElementById('pais');
+  var paisOtro    = document.getElementById('pais_otro');
+  var grupoPaisOtro = document.getElementById('grupo_pais_otro');
+
+  var inputArchivo = document.getElementById('documentos_ci_pasaporte');
+  var zonaArchivo  = document.getElementById('zonaArchivo');
+  var infoArchivo  = document.getElementById('infoArchivo');
+
+  var inputFoto    = document.getElementById('foto_perfil');
+  var zonaFoto     = document.getElementById('zonaFoto');
+  var infoFoto     = document.getElementById('infoFoto');
+  var previewFoto  = document.getElementById('previewFoto');
+
+  var REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var REGEX_URL   = /^https?:\/\/[^\s$.?#].[^\s]*$/i;
+  var REGEX_NUM   = /^\d+$/;
+  var EXT_OK      = ['pdf', 'jpg', 'jpeg', 'png'];
+  var EXT_FOTO    = ['jpg', 'jpeg', 'png'];
+  var MAX_BYTES   = 5 * 1024 * 1024; // 5 MB
+
+  // Fecha máxima: hoy
+  document.getElementById('Nacimiento').setAttribute('max', new Date().toISOString().split('T')[0]);
+
+  // --- Solo números en ci y celular ---
+  ['ci', 'celular'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () {
+      this.value = this.value.replace(/\D/g, '');
+    });
+  });
+
+  // --- UI dinámica "Otro especificar" ---
+  function actualizarOtros() {
+    var esOtroCargo = cargoSel.value.trim().toLowerCase() === 'otro especificar';
+    var esOtroPais  = paisSel.value.trim().toLowerCase() === 'otro especificar';
+    grupoCargoOtro.classList.toggle('visible', esOtroCargo);
+    grupoPaisOtro.classList.toggle('visible', esOtroPais);
+    cargoOtro.required = esOtroCargo;
+    paisOtro.required  = esOtroPais;
+  }
+  cargoSel.addEventListener('change', actualizarOtros);
+  paisSel.addEventListener('change', actualizarOtros);
+  actualizarOtros();
+
+  // --- Input file: zona clicable + drag & drop ---
+  zonaArchivo.addEventListener('click', function () { inputArchivo.click(); });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    zonaArchivo.addEventListener(ev, function (e) {
+      e.preventDefault();
+      zonaArchivo.classList.add('arrastrando');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    zonaArchivo.addEventListener(ev, function (e) {
+      e.preventDefault();
+      zonaArchivo.classList.remove('arrastrando');
+    });
+  });
+  zonaArchivo.addEventListener('drop', function (e) {
+    if (e.dataTransfer.files.length) inputArchivo.files = e.dataTransfer.files;
+    validarArchivo();
+  });
+  inputArchivo.addEventListener('change', validarArchivo);
+
+  function validarArchivo() {
+    var f = inputArchivo.files[0];
+    if (!f) {
+      infoArchivo.textContent = '';
+      return false;
+    }
+    var ext = f.name.split('.').pop().toLowerCase();
+    if (EXT_OK.indexOf(ext) === -1) {
+      infoArchivo.textContent = 'Formato no permitido: ' + f.name + ' (usa PDF, JPG, JPEG o PNG)';
+      inputArchivo.value = '';
+      return false;
+    }
+    if (f.size > MAX_BYTES) {
+      infoArchivo.textContent = 'El archivo supera los 5 MB: ' + f.name;
+      inputArchivo.value = '';
+      return false;
+    }
+    infoArchivo.textContent = '✓ ' + f.name + ' (' + (f.size / 1024 / 1024).toFixed(2) + ' MB)';
+    return true;
+  }
+
+  // --- Input foto de perfil: zona clicable + drag & drop + vista previa ---
+  zonaFoto.addEventListener('click', function () { inputFoto.click(); });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    zonaFoto.addEventListener(ev, function (e) {
+      e.preventDefault();
+      zonaFoto.classList.add('arrastrando');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    zonaFoto.addEventListener(ev, function (e) {
+      e.preventDefault();
+      zonaFoto.classList.remove('arrastrando');
+    });
+  });
+  zonaFoto.addEventListener('drop', function (e) {
+    if (e.dataTransfer.files.length) inputFoto.files = e.dataTransfer.files;
+    validarFoto();
+  });
+  inputFoto.addEventListener('change', validarFoto);
+
+  function validarFoto() {
+    var f = inputFoto.files[0];
+    if (!f) {
+      infoFoto.textContent = '';
+      previewFoto.style.display = 'none';
+      return false;
+    }
+    var ext = f.name.split('.').pop().toLowerCase();
+    if (EXT_FOTO.indexOf(ext) === -1) {
+      infoFoto.textContent = 'Formato no permitido: ' + f.name + ' (usa JPG, JPEG o PNG)';
+      inputFoto.value = '';
+      previewFoto.style.display = 'none';
+      return false;
+    }
+    if (f.size > MAX_BYTES) {
+      infoFoto.textContent = 'La foto supera los 5 MB: ' + f.name;
+      inputFoto.value = '';
+      previewFoto.style.display = 'none';
+      return false;
+    }
+    infoFoto.textContent = '✓ ' + f.name + ' (' + (f.size / 1024 / 1024).toFixed(2) + ' MB)';
+    previewFoto.src = URL.createObjectURL(f);
+    previewFoto.style.display = 'block';
+    return true;
+  }
+
+  // --- Limpiar marcas de error ---
+  document.querySelectorAll('input, select').forEach(function (el) {
+    el.addEventListener('input', function () { this.classList.remove('invalido'); });
+  });
+
+  function mostrarMensaje(tipo, html) {
+    msjEl.className = 'mensaje visible ' + tipo;
+    msjEl.innerHTML = html;
+  }
+
+  function marcarInvalido(el) { el.classList.add('invalido'); }
+
+  // --- Validación de campos ---
+  function validar() {
+    var errores = [];
+    [['nombre_comp', 'Nombre completo'], ['nombres', 'Nombres'], ['ap_pat', 'Apellido paterno'],
+     ['ap_mat', 'Apellido materno']].forEach(function (par) {
+      var el = document.getElementById(par[0]);
+      if (!el.value.trim()) { errores.push(par[1] + ' es obligatorio.'); marcarInvalido(el); }
+    });
+
+    if (cargoOtro.required && !cargoOtro.value.trim()) {
+      errores.push('Debes especificar el cargo.'); marcarInvalido(cargoOtro);
+    }
+    if (paisOtro.required && !paisOtro.value.trim()) {
+      errores.push('Debes especificar el país.'); marcarInvalido(paisOtro);
+    }
+
+    var correo = document.getElementById('correo');
+    if (!correo.value.trim()) { errores.push('El correo es obligatorio.'); marcarInvalido(correo); }
+    else if (!REGEX_EMAIL.test(correo.value.trim())) { errores.push('Formato de correo inválido.'); marcarInvalido(correo); }
+
+    var nac = document.getElementById('Nacimiento');
+    if (!nac.value) { errores.push('La fecha de nacimiento es obligatoria.'); marcarInvalido(nac); }
+
+    [['ci', 'CI'], ['celular', 'Celular']].forEach(function (par) {
+      var el = document.getElementById(par[0]);
+      if (!el.value) { errores.push(par[1] + ' es obligatorio.'); marcarInvalido(el); }
+      else if (!REGEX_NUM.test(el.value)) { errores.push(par[1] + ' debe contener solo números.'); marcarInvalido(el); }
+    });
+
+    var orcid = document.getElementById('orcid');
+    if (!orcid.value.trim()) { errores.push('El ORCID es obligatorio.'); marcarInvalido(orcid); }
+    else if (!REGEX_URL.test(orcid.value.trim())) { errores.push('El ORCID debe ser una URL válida (https://...).'); marcarInvalido(orcid); }
+
+    if (!validarArchivo()) {
+      if (inputArchivo.files.length) errores.push('El documento adjunto no es válido.');
+    }
+    if (!validarFoto()) {
+      if (inputFoto.files.length) errores.push('La foto de perfil no es válida.');
+    }
+    return errores;
+  }
+
+  // --- Envío: empaqueta Base64 (FileReader) y llama al backend ---
+  function enviar(payload) {
+    google.script.run
+      .withSuccessHandler(alExito)
+      .withFailureHandler(alFallar)
+      .registrarPersonal(payload);
+  }
+
+  formEl.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    msjEl.className = 'mensaje';
+
+    if (btnEl.disabled) return; // anti doble clic
+
+    var errores = validar();
+    if (errores.length) {
+      mostrarMensaje('error', '<strong>Corrige los siguientes campos:</strong><br>' + errores.join('<br>'));
+      return;
+    }
+
+    btnEl.disabled = true;
+    btnEl.innerHTML = '<span class="spinner"></span>Procesando...';
+
+    var payload = {
+      nombre_comp: document.getElementById('nombre_comp').value.trim(),
+      nombres:     document.getElementById('nombres').value.trim(),
+      ap_pat:      document.getElementById('ap_pat').value.trim(),
+      ap_mat:      document.getElementById('ap_mat').value.trim(),
+      cargo:       cargoSel.value,
+      correo:      document.getElementById('correo').value.trim(),
+      Nacimiento:  document.getElementById('Nacimiento').value,
+      ci:          document.getElementById('ci').value,
+      celular:     document.getElementById('celular').value,
+      orcid:       document.getElementById('orcid').value.trim(),
+      pais:        paisSel.value,
+      estado:      document.getElementById('estado').value,
+      pasaporte:   document.getElementById('pasaporte').value.trim()
+    };
+    if (cargoOtro.required) payload.cargo_otro = cargoOtro.value.trim();
+    if (paisOtro.required)  payload.pais_otro  = paisOtro.value.trim();
+
+    var archivo = inputArchivo.files[0];
+    if (!archivo) {
+      subirFotoSiExiste(payload);
+      return;
+    }
+
+    // Convertir a Base64 antes del envío
+    var lector = new FileReader();
+    lector.onload = function () {
+      payload.documentos = {
+        fileName: archivo.name,
+        mimeType: archivo.type || 'application/octet-stream',
+        base64:   lector.result.split(',')[1] // sin el prefijo data:...;base64,
+      };
+      subirFotoSiExiste(payload);
+    };
+    lector.onerror = function () {
+      btnEl.disabled = false;
+      btnEl.textContent = 'Registrar Personal';
+      mostrarMensaje('error', 'No se pudo leer el archivo seleccionado.');
+    };
+    lector.readAsDataURL(archivo);
+  });
+
+  // Lee la foto (opcional) a Base64 y luego envía el formulario.
+  function subirFotoSiExiste(payload) {
+    var foto = inputFoto.files[0];
+    if (!foto) {
+      enviar(payload);
+      return;
+    }
+    var lectorFoto = new FileReader();
+    lectorFoto.onload = function () {
+      payload.foto = {
+        fileName: foto.name,
+        mimeType: foto.type || 'image/jpeg',
+        base64:   lectorFoto.result.split(',')[1] // sin el prefijo data:...;base64,
+      };
+      enviar(payload);
+    };
+    lectorFoto.onerror = function () {
+      btnEl.disabled = false;
+      btnEl.textContent = 'Registrar Personal';
+      mostrarMensaje('error', 'No se pudo leer la foto seleccionada.');
+    };
+    lectorFoto.readAsDataURL(foto);
+  }
+
+  function alExito(respuesta) {
+    btnEl.disabled = false;
+    btnEl.textContent = 'Registrar Personal';
+
+    if (respuesta && respuesta.status === 'success') {
+      mostrarMensaje('exito',
+        '<strong>¡Alta exitosa!</strong> ID asignado: <strong>' + respuesta.id_inv + '</strong> · N° consolidador: <strong>' +
+        respuesta.numeroConsolidador + '</strong>.<br>' +
+        '<a href="' + respuesta.folderUrl + '" target="_blank">Abrir carpeta en Drive</a> &nbsp;|&nbsp; ' +
+        '<a href="' + respuesta.fileUrl + '" target="_blank">Abrir Planner</a>');
+      formEl.reset();
+      actualizarOtros();
+      infoArchivo.textContent = '';
+      infoFoto.textContent = '';
+      previewFoto.style.display = 'none';
+      previewFoto.removeAttribute('src');
+    } else {
+      mostrarMensaje('error', 'Error en [' + (respuesta.step || '?') + ']: ' +
+        (respuesta.message || 'Respuesta desconocida del servidor.'));
+    }
+  }
+
+  function alFallar(error) {
+    btnEl.disabled = false;
+    btnEl.textContent = 'Registrar Personal';
+    mostrarMensaje('error', 'No se pudo conectar con el servidor: ' + error.message);
+  }
+})();
+</script>

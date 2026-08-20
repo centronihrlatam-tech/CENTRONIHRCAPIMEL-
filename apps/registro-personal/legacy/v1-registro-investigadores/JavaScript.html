@@ -1,0 +1,172 @@
+<script>
+(function () {
+  'use strict';
+
+  var formEl  = document.getElementById('formRegistro');
+  var btnEl   = document.getElementById('btnEnviar');
+  var msjEl   = document.getElementById('mensaje');
+  var cargoSel = document.getElementById('cargo');
+  var cargoOtro = document.getElementById('cargo_otro');
+  var grupoCargoOtro = document.getElementById('grupo_cargo_otro');
+  var paisSel  = document.getElementById('pais');
+  var paisOtro = document.getElementById('pais_otro');
+  var grupoPaisOtro = document.getElementById('grupo_pais_otro');
+
+  var REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var REGEX_URL   = /^https?:\/\/[^\s$.?#].[^\s]*$/i;
+  var REGEX_NUM   = /^\d+$/;
+
+  // Fecha máxima: hoy (no permitir fechas futuras)
+  var hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('Nacimiento').setAttribute('max', hoy);
+
+  // --- Solo caracteres numéricos en ci y celular ---
+  ['ci', 'celular'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () {
+      this.value = this.value.replace(/\D/g, '');
+    });
+  });
+
+  // --- UI dinámica "Otro especificar" (cargo y país) ---
+  function actualizarOtros() {
+    var cargoEsOtro = cargoSel.value.trim().toLowerCase() === 'otro especificar';
+    var paisEsOtro  = paisSel.value.trim().toLowerCase() === 'otro especificar';
+
+    grupoCargoOtro.classList.toggle('visible', cargoEsOtro);
+    grupoPaisOtro.classList.toggle('visible', paisEsOtro);
+
+    cargoOtro.required = cargoEsOtro;
+    paisOtro.required  = paisEsOtro;
+  }
+  cargoSel.addEventListener('change', actualizarOtros);
+  paisSel.addEventListener('change', actualizarOtros);
+  actualizarOtros();
+
+  // --- Limpiar marca de error al editar ---
+  document.querySelectorAll('input, select').forEach(function (el) {
+    el.addEventListener('input', function () {
+      this.classList.remove('invalido');
+    });
+  });
+
+  // --- Mostrar mensaje ---
+  function mostrarMensaje(tipo, html) {
+    msjEl.className = 'mensaje visible ' + tipo;
+    msjEl.innerHTML = html;
+  }
+  function ocultarMensaje() {
+    msjEl.className = 'mensaje';
+    msjEl.innerHTML = '';
+  }
+
+  // --- Validación de campos ---
+  function marcarInvalido(el) { el.classList.add('invalido'); }
+
+  function validar() {
+    var errores = [];
+
+    [['nombre_comp', 'Nombre completo'], ['nombres', 'Nombres'], ['ap_pat', 'Apellido paterno'],
+     ['ap_mat', 'Apellido materno']].forEach(function (par) {
+      var el = document.getElementById(par[0]);
+      if (!el.value.trim()) { errores.push(par[1] + ' es obligatorio.'); marcarInvalido(el); }
+    });
+
+    if (cargoOtro.required && !cargoOtro.value.trim()) {
+      errores.push('Debes especificar el cargo.');
+      marcarInvalido(cargoOtro);
+    }
+    if (paisOtro.required && !paisOtro.value.trim()) {
+      errores.push('Debes especificar el país.');
+      marcarInvalido(paisOtro);
+    }
+
+    var correo = document.getElementById('correo');
+    if (!correo.value.trim()) { errores.push('El correo es obligatorio.'); marcarInvalido(correo); }
+    else if (!REGEX_EMAIL.test(correo.value.trim())) { errores.push('Formato de correo inválido.'); marcarInvalido(correo); }
+
+    var nac = document.getElementById('Nacimiento');
+    if (!nac.value) { errores.push('La fecha de nacimiento es obligatoria.'); marcarInvalido(nac); }
+
+    [['ci', 'CI'], ['celular', 'Celular']].forEach(function (par) {
+      var el = document.getElementById(par[0]);
+      if (!el.value) { errores.push(par[1] + ' es obligatorio.'); marcarInvalido(el); }
+      else if (!REGEX_NUM.test(el.value)) { errores.push(par[1] + ' debe contener solo números.'); marcarInvalido(el); }
+    });
+
+    var orcid = document.getElementById('orcid');
+    if (!orcid.value.trim()) { errores.push('El ORCID es obligatorio.'); marcarInvalido(orcid); }
+    else if (!REGEX_URL.test(orcid.value.trim())) { errores.push('El ORCID debe ser una URL válida (https://...).'); marcarInvalido(orcid); }
+
+    return errores;
+  }
+
+  // --- Construcción del payload ---
+  function construirPayload() {
+    var payload = {
+      nombre_comp : document.getElementById('nombre_comp').value.trim(),
+      nombres     : document.getElementById('nombres').value.trim(),
+      ap_pat      : document.getElementById('ap_pat').value.trim(),
+      ap_mat      : document.getElementById('ap_mat').value.trim(),
+      cargo       : cargoSel.value,
+      correo      : document.getElementById('correo').value.trim(),
+      Nacimiento  : document.getElementById('Nacimiento').value,
+      ci          : document.getElementById('ci').value,
+      celular     : document.getElementById('celular').value,
+      orcid       : document.getElementById('orcid').value.trim(),
+      pais        : paisSel.value,
+      estado      : document.getElementById('estado').value,
+      pasaporte   : document.getElementById('pasaporte').value.trim()
+    };
+    if (cargoOtro.required) payload.cargo_otro = cargoOtro.value.trim();
+    if (paisOtro.required)  payload.pais_otro  = paisOtro.value.trim();
+    return payload;
+  }
+
+  // --- Respuestas del servidor ---
+  function alExito(respuesta) {
+    btnEl.disabled = false;
+    btnEl.querySelector('.spinner') && btnEl.removeChild(btnEl.querySelector('.spinner'));
+    btnEl.textContent = 'Registrar Investigador';
+
+    if (respuesta && respuesta.status === 'success') {
+      mostrarMensaje('exito',
+        '<strong>¡Registro exitoso!</strong> ID asignado: <strong>' + respuesta.id_inv + '</strong>.<br>' +
+        '<a href="' + respuesta.folderUrl + '" target="_blank">Abrir carpeta en Drive</a> &nbsp;|&nbsp; ' +
+        '<a href="' + respuesta.fileUrl + '" target="_blank">Abrir Planner</a>');
+      formEl.reset();
+      actualizarOtros();
+    } else {
+      btnEl.disabled = false;
+      btnEl.textContent = 'Registrar Investigador';
+      mostrarMensaje('error', 'Error: ' + (respuesta && respuesta.message ? respuesta.message : 'Respuesta desconocida del servidor.'));
+    }
+  }
+
+  function alFallar(error) {
+    btnEl.disabled = false;
+    btnEl.textContent = 'Registrar Investigador';
+    mostrarMensaje('error', 'No se pudo conectar con el servidor: ' + error.message);
+  }
+
+  // --- Envío (protección anti doble clic) ---
+  formEl.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    ocultarMensaje();
+
+    if (btnEl.disabled) return; // ya hay un envío en curso
+    var errores = validar();
+    if (errores.length) {
+      mostrarMensaje('error', '<strong>Corrige los siguientes campos:</strong><br>' + errores.join('<br>'));
+      return;
+    }
+
+    btnEl.disabled = true;
+    btnEl.innerHTML = '<span class="spinner"></span>Procesando...';
+
+    google.script.run
+      .withSuccessHandler(alExito)
+      .withFailureHandler(alFallar)
+      .registrarInvestigador(construirPayload());
+  });
+})();
+</script>

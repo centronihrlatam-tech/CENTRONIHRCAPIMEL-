@@ -1,0 +1,3 @@
+N°,Nombre Persona,ID Spreadsheet Origen,ID Carpeta,Estado
+1,Origen de ejemplo 1,SPREADSHEET_ID_DE_ORIGEN,FOLDER_ID_DE_ORIGEN,ACTIVO
+2,Origen de ejemplo 2,SPREADSHEET_ID_DE_ORIGEN,FOLDER_ID_DE_ORIGEN,RETIRADO

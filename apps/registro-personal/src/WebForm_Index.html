@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <title>Alta de Nuevo Personal</title>
+  <style>
+    :root {
+      --principal: #0d9488;
+      --principal-oscuro: #0b7a71;
+      --exito: #0f9d58;
+      --error: #d93025;
+      --fondo: #f1f3f4;
+      --texto: #202124;
+      --borde: #dadce0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      background: var(--fondo);
+      color: var(--texto);
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+    .contenedor {
+      max-width: 920px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+      overflow: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, var(--principal), var(--principal-oscuro));
+      color: #fff;
+      padding: 24px 28px;
+    }
+    header h1 { font-size: 1.5rem; margin-bottom: 4px; }
+    header p { font-size: 0.9rem; opacity: 0.9; }
+    .cuerpo { padding: 24px 28px 32px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .campo { display: flex; flex-direction: column; gap: 6px; }
+    .campo label { font-weight: 600; font-size: 0.85rem; }
+    .campo label .req { color: var(--error); }
+    .campo label .ayuda { font-weight: 400; color: #5f6368; }
+    input, select {
+      padding: 10px 12px;
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      width: 100%;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--principal);
+      box-shadow: 0 0 0 3px rgba(13,148,136,0.18);
+    }
+    input.invalido, select.invalido { border-color: var(--error); }
+    .campo-extra { display: none; }
+    .campo-extra.visible { display: flex; }
+    .archivo-zona {
+      border: 2px dashed var(--borde);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      color: #5f6368;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .archivo-zona:hover, .archivo-zona.arrastrando { border-color: var(--principal); background: #f0fdfa; }
+    .archivo-info { font-size: 0.8rem; margin-top: 6px; color: #5f6368; word-break: break-all; }
+    #btnEnviar {
+      margin-top: 24px;
+      width: 100%;
+      padding: 13px;
+      background: var(--principal);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    #btnEnviar:hover { background: var(--principal-oscuro); }
+    #btnEnviar:active { transform: scale(0.99); }
+    #btnEnviar:disabled { background: #9aa0a6; cursor: not-allowed; }
+    .mensaje {
+      margin-top: 20px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      display: none;
+    }
+    .mensaje.visible { display: block; }
+    .mensaje.exito { background: #e6f4ea; color: var(--exito); border: 1px solid #ceead6; }
+    .mensaje.error { background: #fce8e6; color: var(--error); border: 1px solid #f4c7c3; }
+    .mensaje a { color: inherit; font-weight: 600; }
+    .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: girar 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes girar { to { transform: rotate(360deg); } }
+    @media (max-width: 480px) {
+      .cuerpo, header { padding-left: 18px; padding-right: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <header>
+      <h1>Alta de Nuevo Personal</h1>
+      <p>Registro de investigadores — integración automática con la base consolidada</p>
+    </header>
+
+    <div class="cuerpo">
+      <form id="formAlta" novalidate>
+        <div class="grid">
+
+          <div class="campo">
+            <label for="nombre_comp">Nombre completo <span class="req">*</span></label>
+            <input type="text" id="nombre_comp" name="nombre_comp" required>
+          </div>
+
+          <div class="campo">
+            <label for="nombres">Nombres <span class="req">*</span></label>
+            <input type="text" id="nombres" name="nombres" required>
+          </div>
+
+          <div class="campo">
+            <label for="ap_pat">Apellido paterno <span class="req">*</span></label>
+            <input type="text" id="ap_pat" name="ap_pat" required>
+          </div>
+
+          <div class="campo">
+            <label for="ap_mat">Apellido materno <span class="req">*</span></label>
+            <input type="text" id="ap_mat" name="ap_mat" required>
+          </div>
+
+          <div class="campo">
+            <label for="cargo">Cargo <span class="req">*</span></label>
+            <select id="cargo" name="cargo" required>
+              <option value="">-- Seleccionar --</option>
+              <option value="Asistente de investigacion">Asistente de investigacion</option>
+              <option value="Pasante">Pasante</option>
+              <option value="Becario">Becario</option>
+              <option value="Coordinador">Coordinador</option>
+              <option value="Otro especificar">Otro especificar</option>
+            </select>
+          </div>
+
+          <div class="campo campo-extra" id="grupo_cargo_otro">
+            <label for="cargo_otro">Especificar cargo <span class="req">*</span></label>
+            <input type="text" id="cargo_otro" name="cargo_otro" placeholder="Escribe el cargo real">
+          </div>
+
+          <div class="campo">
+            <label for="correo">Correo electrónico <span class="req">*</span></label>
+            <input type="email" id="correo" name="correo" placeholder="usuario@dominio.com" required>
+          </div>
+
+          <div class="campo">
+            <label for="Nacimiento">Fecha de nacimiento <span class="req">*</span></label>
+            <input type="date" id="Nacimiento" name="Nacimiento" required>
+          </div>
+
+          <div class="campo">
+            <label for="ci">Carnet de identidad (CI) <span class="req">*</span></label>
+            <input type="text" id="ci" name="ci" inputmode="numeric" required>
+          </div>
+
+          <div class="campo">
+            <label for="celular">Celular <span class="req">*</span></label>
+            <input type="text" id="celular" name="celular" inputmode="numeric" required>
+          </div>
+
+          <div class="campo">
+            <label for="orcid">ORCID (URL) <span class="req">*</span></label>
+            <input type="url" id="orcid" name="orcid" placeholder="https://orcid.org/0000-0000-0000-0000" required>
+          </div>
+
+          <div class="campo">
+            <label for="pais">País <span class="req">*</span></label>
+            <select id="pais" name="pais" required>
+              <option value="">-- Seleccionar --</option>
+              <option value="BOL">BOL</option>
+              <option value="GUA">GUA</option>
+              <option value="COL">COL</option>
+              <option value="Otro especificar">Otro especificar</option>
+            </select>
+          </div>
+
+          <div class="campo campo-extra" id="grupo_pais_otro">
+            <label for="pais_otro">Especificar país <span class="req">*</span></label>
+            <input type="text" id="pais_otro" name="pais_otro" placeholder="Escribe el país real">
+          </div>
+
+          <div class="campo">
+            <label for="estado">Estado <span class="req">*</span></label>
+            <select id="estado" name="estado" required>
+              <option value="">-- Seleccionar --</option>
+              <option value="Retirado">Retirado</option>
+              <option value="Vigente">Vigente</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="pasaporte">Pasaporte <span class="ayuda">(opcional)</span></label>
+            <input type="text" id="pasaporte" name="pasaporte">
+          </div>
+
+          <div class="campo">
+            <label for="documentos_ci_pasaporte">Documento CI / Pasaporte <span class="ayuda">(opcional · PDF, JPG, PNG · máx 5 MB)</span></label>
+            <input type="file" id="documentos_ci_pasaporte" name="documentos_ci_pasaporte"
+                   accept=".pdf,.jpg,.jpeg,.png" hidden>
+            <div class="archivo-zona" id="zonaArchivo">Haz clic o arrastra el documento aquí</div>
+            <div class="archivo-info" id="infoArchivo"></div>
+          </div>
+
+          <div class="campo">
+            <label for="foto_perfil">Foto actual del trabajador <span class="ayuda">(opcional · JPG, PNG · máx 5 MB)</span></label>
+            <input type="file" id="foto_perfil" name="foto_perfil"
+                   accept=".jpg,.jpeg,.png,image/jpeg,image/png" hidden>
+            <div class="archivo-zona" id="zonaFoto">Haz clic o arrastra la foto aquí</div>
+            <div class="archivo-info" id="infoFoto"></div>
+            <img id="previewFoto" alt="Vista previa de la foto"
+                 style="display:none; max-width:160px; max-height:160px; margin-top:8px; border-radius:8px; border:1px solid var(--borde);">
+          </div>
+
+        </div>
+
+        <button type="submit" id="btnEnviar">Registrar Personal</button>
+      </form>
+
+      <div id="mensaje" class="mensaje"></div>
+    </div>
+  </div>
+
+  <?!= include('WebForm_Script'); ?>
+</body>
+</html>

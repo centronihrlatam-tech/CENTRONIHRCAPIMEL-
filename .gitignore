@@ -38,3 +38,21 @@ desktop.ini
 *.log
 *.bak
 *.tmp
+
+# -- Datos privados del despliegue -------------------------------------
+# Identificadores de Drive/Sheets, catalogos con datos personales y
+# cualquier volcado de datos reales. Ningun proyecto debe versionarlos.
+local/
+*.local.gs
+*.local.json
+secrets*
+credentials*.json
+
+# -- Exportaciones y respaldos de datos reales ------------------------
+*.csv
+# ...excepto las plantillas de estructura (sin datos reales):
+!apps/registro-personal/templates/*.csv
+*.xlsx
+*.zip
+_BACKUP*/
+backup*/

@@ -1,0 +1,10 @@
+{
+  "_comentario": "Valores de ejemplo. Cárgalos en Apps Script > Configuración del proyecto > Propiedades del script. NO commitear el archivo con valores reales.",
+  "SPREADSHEET_ID": "ID_DEL_SPREADSHEET_CON_LA_PESTANA_db_per",
+  "ROOT_FOLDER_ID": "ID_DE_LA_CARPETA_RAIZ_DE_CATEGORIAS",
+  "PASAPORTES_FOLDER_ID": "ID_DE_LA_CARPETA_DE_CI_Y_PASAPORTES",
+  "FOTOS_FOLDER_ID": "ID_DE_LA_CARPETA_DE_FOTOGRAFIAS",
+  "TEMPLATE_FILE_ID": "ID_DE_LA_PLANTILLA_FORMATO_PLANNER",
+  "MASTER_SPREADSHEET_ID": "",
+  "SHEET_NAME": "db_per"
+}
