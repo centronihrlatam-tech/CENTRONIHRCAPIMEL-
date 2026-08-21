@@ -2,9 +2,9 @@
 
 > Aplicación del monorepo del Centro NIHR LatAm, desplegada bajo el nombre
 > **CAPIBARABOT**. Código base: *AI Planner Bot*, de
-> [Fernandrezz](https://github.com/Fernandrezz/ai-planner-bot), integrado aquí
-> con su autorización. Conserva sus propios términos de uso: **no está cubierto
-> por la licencia MIT de la raíz** del monorepo (ver "Status and licensing").
+> [Fernando Andres Rojas Blanco](https://github.com/rojasblanco/ai-planner-bot),
+> integrado aquí con su autorización y bajo la **Licencia MIT** propia de este
+> directorio ([`LICENSE`](LICENSE)), distinta de la de la raíz del monorepo.
 > Índice de aplicaciones en el [README raíz](../../README.md).
 
 
@@ -14,7 +14,7 @@
 
 Developed in the operational context of a **research center**, it combines **Telegram, Google Apps Script, OpenAI, Google Sheets, and Google Drive** so users can register activities from a phone or computer using natural language, interactive buttons, or a combination of both. Photographic evidence can be uploaded directly from Telegram and linked automatically to the corresponding planner record.
 
-This repository contains a **sanitized public version authorized for academic and professional portfolio purposes**. It does not include production credentials, real user mappings, organizational datasets, or private Google Workspace resource identifiers.
+This repository contains a **sanitized public portfolio implementation released with permission**. It does not include production credentials, real user mappings, organizational datasets, or private Google Workspace resource identifiers. The public source code and documentation in this repository are distributed under the MIT License.
 
 ## The problem
 
@@ -360,7 +360,7 @@ The software originated from a real process-improvement need in a **research cen
 
 **Technical design and source-code development of this public implementation were carried out by the repository author.**
 
-The sanitized public version is published with permission for **academic and professional portfolio purposes**. The institution is intentionally not identified, and production data, credentials, user information, evidence, and private infrastructure are excluded.
+The sanitized public version is released with permission as an **academic and professional portfolio implementation**. The institution is intentionally not identified, and production data, credentials, user information, evidence, and private infrastructure are excluded.
 
 From a portfolio perspective, the project documents the full path from:
 
@@ -405,11 +405,13 @@ For clasp-based workflows, `.clasp.json.example` is provided while the real `.cl
 
 **Status:** Active / iterative.
 
-Redistributed inside this monorepo with the author's permission, under the
-name CAPIBARABOT. The root `LICENSE` (MIT) does **not** apply to this
-directory.
+The sanitized source code and documentation contained in this public repository are distributed under the [MIT License](LICENSE).
 
-No open-source license is included in this portfolio version. Public availability of the source code does not grant third parties permission to copy, modify, redistribute, commercialize, or deploy it. Any broader reuse rights must be obtained from the applicable rights holder.
+Within this monorepo, that same MIT License — copyright Fernando Andres Rojas Blanco — governs `apps/capibarabot/`. The root `LICENSE` of the monorepo does not apply to this directory.
+
+The license applies only to the material included in this repository. Production credentials, organizational data, private infrastructure, operational evidence, personal information, and other non-public resources from the original operational environment are not part of this repository and are not covered by this public release.
+
+For additional context regarding the origin of the project and the technical contribution documented here, see [PROVENANCE.md](PROVENANCE.md).
 
 ---
 

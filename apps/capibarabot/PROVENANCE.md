@@ -25,7 +25,9 @@ The implementation includes:
 
 ## Public portfolio version
 
-This repository contains a **sanitized public version published with permission for academic and professional portfolio purposes**.
+This repository contains a **sanitized public version released with permission as a public academic and professional portfolio implementation**.
+
+The public source code in this repository is distributed under the MIT License. This public release does not include or grant access to the research center's production environment, operational data, private infrastructure, credentials, or other non-public institutional resources.
 
 The research center is intentionally not identified. Production-specific information remains outside the repository, including:
 
@@ -41,8 +43,10 @@ The research center is intentionally not identified. Production-specific informa
 
 The repository documents the technical contribution and the evolution of the public codebase. Git history can provide useful technical traceability of future public changes, while earlier internal development evidence remains separate from the public repository.
 
-## Intellectual-property note
+## Intellectual-property and licensing note
 
-This document describes project provenance and technical contribution. It does not claim exclusive ownership of institutional intellectual-property or economic exploitation rights, and it does not grant reuse or distribution rights.
+This document describes the provenance of the project and the technical contribution represented by this public repository. It does not, by itself, determine or claim exclusive ownership of any institutional intellectual-property rights, confidential information, production assets, organizational data, or other non-public resources associated with the original operational environment.
 
-No open-source license is included. Any broader permission to reuse, modify, distribute, commercialize, or deploy the software must be obtained from the applicable rights holder.
+The sanitized source code and documentation contained in this public repository are distributed under the MIT License. See [LICENSE](LICENSE) for the applicable terms.
+
+The MIT License applies only to the material actually included in this repository. It does not apply to production credentials, organizational datasets, private Google Workspace resources, operational evidence, personal data, institutional infrastructure, trademarks, or other materials that are not included in the public repository.

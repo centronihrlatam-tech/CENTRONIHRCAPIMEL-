@@ -6,7 +6,8 @@ This changelog begins with the first public portfolio release. It does not attem
 
 ## Unreleased
 
-No public changes yet.
+- Added MIT License for the sanitized public source-code release.
+- Updated README and provenance documentation to reflect the repository licensing terms.
 
 ## 1.0.0 — Initial public portfolio release
 

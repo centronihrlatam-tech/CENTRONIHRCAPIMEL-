@@ -46,6 +46,7 @@ separado. Comparten repositorio, licencia y criterios de seguridad.
     └── capibarabot/            Bot de Telegram para el planner
         ├── Code.gs             Webhook, flujos de registro, evidencias, analítica
         ├── appsscript.json
+        ├── LICENSE             MIT propia (© Fernando Andres Rojas Blanco)
         └── PROVENANCE.md       Origen, autoría y alcance de la autorización
 ```
 
@@ -102,8 +103,10 @@ Detalle por aplicación:
 
 [MIT](LICENSE) — Centro NIHR LatAm, Bolivia.
 
-**Excepción:** `apps/capibarabot/` conserva los términos de su autor original
-([Fernandrezz/ai-planner-bot](https://github.com/Fernandrezz/ai-planner-bot)) y
-se incluye aquí con su autorización. No es MIT: consulta
-[`apps/capibarabot/PROVENANCE.md`](apps/capibarabot/PROVENANCE.md) antes de
-reutilizar o redistribuir ese directorio.
+**`apps/capibarabot/`** se distribuye bajo su propia Licencia MIT, copyright
+**Fernando Andres Rojas Blanco**
+([rojasblanco/ai-planner-bot](https://github.com/rojasblanco/ai-planner-bot)), y
+se integra aquí con su autorización. Los términos son los mismos, pero el
+titular es distinto: al reutilizar ese directorio conserva su aviso de copyright
+([`apps/capibarabot/LICENSE`](apps/capibarabot/LICENSE) y
+[`PROVENANCE.md`](apps/capibarabot/PROVENANCE.md)).
